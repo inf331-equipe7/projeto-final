@@ -12,8 +12,8 @@
 - [Nível 1](#nível-1)
   - [Diagrama Geral do Nível 1](#diagrama-geral-do-nível-1)
   - [Componente `Buyer`](#componente-buyer)
-  - [Componente `Product`](#componente-product)
-  - [Componente `Order`](#componente-order)
+  - [Componente `Product`](#componente-product) #Simeao
+  - [Componente `Order`](#componente-order) #Shida
   - [Componente `Payment`](#componente-payment)
   - [Componente `Seller`](#componente-seller)
   - [Componente `Shipping`](#componente-shipping)
@@ -92,7 +92,7 @@ Classes que representam objetos JSON associados às mensagens da interface:
 
 ~~~json
 {
-  "query": "camisetas",
+  "term": "camisetas",
   "price_range": {
     "min": "50.0",
     "max": "300.0"
@@ -125,7 +125,7 @@ Atributo | Descrição
 
 Esta interface é uma fonte de dados ver os detalhes de um produto.
 
-**Tópico**: `product/<id>/details`
+**Tópico**: `product/{id}/details`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
@@ -143,16 +143,18 @@ Atributo | Descrição
 
 ### Interface `IOrder` <!-- omit in toc -->
 
-> Esta interface é responsável por prover os dados para um novo pedido.
+Esta interface é uma fonte que dispara um evento para iniciar um pedido.
 
-**Tópico**: `order/<fornecedorId>/create/<produtoId>`
+**Tópico**: `order/{fornecedorId}/create/{produtoId}`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
 ![Diagrama Classes IOrder](images/diagrama-classes-iorder.png)
 
 ~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+{
+
+}
 ~~~
 
 Detalhamento da mensagem JSON:

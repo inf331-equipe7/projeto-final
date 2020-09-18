@@ -1,4 +1,4 @@
-# Projeto Marketpkace
+# Projeto Marketplace
 
 # Equipe
 - Aruã Puertas
@@ -13,18 +13,37 @@ Apresente aqui o detalhamento do Nível 1 conforme detalhado na especificação 
 
 ## Diagrama Geral do Nível 1
 
-Apresente um diagrama conforme o modelo a seguir:
-
-> ![Modelo de diagrama no nível 1](images/coreografia.png)
+> ![Diagrama no nível 1](images/coreografia.png)
 
 ### Detalhamento da interação de componentes
 
-O detalhamento deve seguir um formato de acordo com o exemplo a seguir:
+#### Processo de compra
 
-* O `componente X` inicia o leilão publicando no barramento a mensagem de tópico "`leilão/<número>/início`" através da interface `Gerente Leilão`, iniciando um leilão.
-* O `componente Y` assina no barramento mensagens de tópico "`leilão/+/início`" através da interface `Participa Leilão`. Quando recebe uma mensagem…
+* O `componente Buyer` inicia o processo de compra publicando no barramento a mensagem de tópico `"product/search"` através da interface ISearch;
+* O `componente Product` assina no barramento de mensagens de tópico `"product/search"` através da `interface ISearch`. Quando recebe uma mensagem, ele mostra os produtos;
+* O `componente Buyer` seleciona um produto publicando no barramento a mensagem de tópico `"product/{id}/details"` através da `interface IProduct`;
+* O `componente Product` assina no barramento de mensagens de tópico `"product/{id}/details"` através da `interface IProduct`. Quando recebe uma mensagem, ele mostra os dados do produto selecionado;
+* O `componente Buyer` publica no barramento de mensagem de tópico `"order/{fornecedorId}/create/{produtoId}"` através da `interface IOrder` realizando o pedido;
+* O `componente Order` assina no barramento de mensagens de tópico `"order/{fornecedorId}create/{produtoId}"` através da `interface IOrder`. Quando recebe uma mensagem, ele valida as informações do pedido publicando no barramento de mensagem de tópico `"payment/check/{orderId}"` através da `interface IPayment`;
+* O `componente Payment` assina no barramento de mensagens de tópico `"payment/check/{orderId}"` através da `interface IPayment`. Quando recebe a mensagem,  ele publica no barramento de mensagem de tópico `"payment/order/{orderId}/denied"` através da `interface IPayment` caso o pagamento não foi aprovado ou publica no barramento de mensagem de tópico `"payment/order/{orderId}/confirmed"` atráves da `interface IPayment` caso o pagamento foi confirmado;
+* O `component Buyer` assina no barramento de mensagem de tópico `"payment/order/{orderId}/+"` através da `interface IPayment`. Quando recebe uma mensagem, ele verifica se o pedido foi confirmado ou negado;
+* O `componente Seller` assina no barramento de mensagem de tópico `"payment/order/{orderId}/confirmed"` através da `interface IPayment`. Quando ele recebe a mensagem, dá início ao processo de envio do produto publicando no barramento de mensagem de tópico `"dispatcher/order/{orderId}"` através da `interface ISeller`;
+* O `componente Shipping` assina no barramento de mensagem de tópico `"dispatcher/order/{orderId}"` através da `interface ISeller`. Quando recebe uma mensagem, ele publica no barramento de mensagens de tópico `"location/status"` através da `interface IShipping` atualizando o estado da entrega;
+* O `component Buyer` assina no barramento de mensagem de tópico `"location/status"` através da `interface IShipping`. Quando recebe uma mensagem, exibe as informações da entrega;
+* O `componente Seller` assina no barramento de mensagem de tópico `"location/status"` através da `interface IShipping`. Quando ele recebe a mensagem, atualiza as informações na base de dados;
+* O `componente Recommendation` assina o tópico `"order/create"` atraveś da `interface IOrder` para monitorar os produtos mais requisitados e seus respectivos fornecedores afim de melhorar o seu algoritmo de recomendação. Além disso, também assina o tópico `"payment/order/+"` através da `interface IPayment` para entender qual é a forma de pagamento mais comum praticado pelos compradores.
 
-Para cada componente será apresentado um documento conforme o modelo a seguir:
+#### Leilão Invertido
+
+* O `componente Buyer` inicia o processo de leilão publicando no barramento a mensagem de tópico `"auction/create"` através da `interface ICreateAuction`;
+* O `componente Auction` assina no barramento de mensagem de tópico `"auction/create"` através da `interface ICreateAuction`. Quando ele recebe a mensagem, ele inicia o leilão com o produto que o comprador deseja e com um tempo limite publicando uma mensagem no barramento de tópico `"auction/{auctionId}/begin"` através da `interface IAuction`;
+* O `componente Seller` assina no barramento de mensagem de tópico `"auction/{auctionId}/begin"` através da `interface IAuction`. Quando recebe uma mensagem, os fornecedores podem enviar seus lances para o produto desejado publicando no barramento de mensagens de tópico `"auction/{auctionId}/bid"` através da `interface IAuction`;
+* O `componente Seller` assina no barramento de mensagem de tópico `"auction/{auctionId}/bid"` através da `interface IAuction`. Quando recebe uma mensagem, o fornecedor verifica o novo lance do fornecedor concorrente e determina se vai oferecer um valor menor publicando outra mensagem no barramento usando o mesmo tópico e interface;
+* O `componente Buyer` assina no barramento de mensagem de tópico `"auction/{auctionId}/bid"` através da `interface IAuction`. Quando recebe uma mensagem, o comprador pode ver os lances do leilão;
+* O `componente Auction` informa o final do leilão publicando uma mensagem no barramento de tópico `"auction/{auctionId}/finish"` através da `interface IAuction`;
+* O `componente Buyer` assina no barramento de mensagem de tópico `"auction/{auctionId}/finish"` através da `interface IAuction`. Quando recebe uma mensagem, o comprador pode ver lance final;
+* O `componente Seller` assina no barramento de mensagem de tópico `"auction/{auctionId}/finish"` através da `interface IAuction`. Quando recebe uma mensagem, o informa ao fornecedor que ofereceu o menor lance que ele ganhou o leilão;
+* O `componente Recommendation` assina o tópico `"auction/+/finish"` atraveś da `interface IAuction` para monitorar o produto, o menor preço e o fornecedor.
 
 ## Componente `<Nome do Componente>`
 

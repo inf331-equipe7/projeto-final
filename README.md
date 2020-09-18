@@ -9,8 +9,6 @@
 
 # Nível 1
 
-Apresente aqui o detalhamento do Nível 1 conforme detalhado na especificação com, no mínimo, as seguintes subseções:
-
 ## Diagrama Geral do Nível 1
 
 > ![Diagrama no nível 1](images/coreografia.png)
@@ -45,14 +43,20 @@ Apresente aqui o detalhamento do Nível 1 conforme detalhado na especificação 
 * O `componente Seller` assina no barramento de mensagem de tópico `"auction/{auctionId}/finish"` através da `interface IAuction`. Quando recebe uma mensagem, o informa ao fornecedor que ofereceu o menor lance que ele ganhou o leilão;
 * O `componente Recommendation` assina o tópico `"auction/+/finish"` atraveś da `interface IAuction` para monitorar o produto, o menor preço e o fornecedor.
 
-## Componente `<Nome do Componente>`
+## Componente `Buyer`
 
 > <Resumo do papel do componente e serviços que ele oferece.>
 
-![Componente](diagrama-componente-mensagens.png)
+![Componente Buyer](componente-buyer.png)
 
 **Interfaces**
-> * Listagem das interfaces do componente.
+> * ISearch;
+> * IProduct;
+> * IOrder;
+> * IPayment;
+> * IShipping;
+> * ICreateAuction;
+> * IAuction.
 
 As interfaces listadas são detalhadas a seguir:
 
@@ -78,51 +82,245 @@ Atributo | Descrição
 -------| --------
 `<nome do atributo>` | `<objetivo do atributo>`
 
-## Exemplo
+## Componente `Product`
 
-### Interface DadosPedido
+> <Resumo do papel do componente e serviços que ele oferece.>
 
-Interface para envio de dados do pedido com itens associados.
+![Componente Product](componente-product.png)
 
-**Tópico**: `pedido/{id}/dados`
+**Interfaces**
+> * ISearch;
+> * IProduct.
+
+As interfaces listadas são detalhadas a seguir:
+
+## Detalhamento das Interfaces
+
+### Interface `<nome da interface>`
+
+> Resumo do papel da interface.
+
+**Tópico**: `<tópico que a respectiva interface assina ou publica>`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
 ![Diagrama Classes REST](images/diagrama-classes-rest.png)
 
 ~~~json
-{
-  "number": 16,
-  "duoDate": "2009-10-04",
-  "total": 1937.01,
-  "items": {
-    "item": {
-       "itemid": "1245",
-       "quantity": 1
-    },
-    "item": {
-       "itemid": "1321",
-       "quantity": 1
-    }
-  }  
-}
+<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
 ~~~
 
 Detalhamento da mensagem JSON:
 
-**Order**
 Atributo | Descrição
 -------| --------
-number | número do pedido
-duoDate | data de vencimento
-total | valor total do pedido
-items | itens do pedido
+`<nome do atributo>` | `<objetivo do atributo>`
 
-**Item**
+## Componente `Order`
+
+> <Resumo do papel do componente e serviços que ele oferece.>
+
+![Componente Order](componente-order.png)
+
+**Interfaces**
+> * IOrder;
+> * IPayment.
+
+As interfaces listadas são detalhadas a seguir:
+
+## Detalhamento das Interfaces
+
+### Interface `<nome da interface>`
+
+> Resumo do papel da interface.
+
+**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+
+Classes que representam objetos JSON associados às mensagens da interface:
+
+![Diagrama Classes REST](images/diagrama-classes-rest.png)
+
+~~~json
+<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+~~~
+
+Detalhamento da mensagem JSON:
+
 Atributo | Descrição
 -------| --------
-itemid | identificador do item
-quantity | quantidade do item
+`<nome do atributo>` | `<objetivo do atributo>`
+
+## Componente `Payment`
+
+> <Resumo do papel do componente e serviços que ele oferece.>
+
+![Componente Payment](componente-payment.png)
+
+**Interfaces**
+> * IPayment.
+
+As interfaces listadas são detalhadas a seguir:
+
+## Detalhamento das Interfaces
+
+### Interface `<nome da interface>`
+
+> Resumo do papel da interface.
+
+**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+
+Classes que representam objetos JSON associados às mensagens da interface:
+
+![Diagrama Classes REST](images/diagrama-classes-rest.png)
+
+~~~json
+<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+~~~
+
+Detalhamento da mensagem JSON:
+
+Atributo | Descrição
+-------| --------
+`<nome do atributo>` | `<objetivo do atributo>`
+
+## Componente `Seller`
+
+> <Resumo do papel do componente e serviços que ele oferece.>
+
+![Componente Seller](componente-seller.png)
+
+**Interfaces**
+> * ISeller;
+> * IPayment;
+> * IShipping;
+> * IAuction.
+
+As interfaces listadas são detalhadas a seguir:
+
+## Detalhamento das Interfaces
+
+### Interface `<nome da interface>`
+
+> Resumo do papel da interface.
+
+**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+
+Classes que representam objetos JSON associados às mensagens da interface:
+
+![Diagrama Classes REST](images/diagrama-classes-rest.png)
+
+~~~json
+<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+~~~
+
+Detalhamento da mensagem JSON:
+
+Atributo | Descrição
+-------| --------
+`<nome do atributo>` | `<objetivo do atributo>`
+
+## Componente `Shipping`
+
+> <Resumo do papel do componente e serviços que ele oferece.>
+
+![Componente Shipping](componente-shipping.png)
+
+**Interfaces**
+> * IShipping;
+> * ISeller.
+
+As interfaces listadas são detalhadas a seguir:
+
+## Detalhamento das Interfaces
+
+### Interface `<nome da interface>`
+
+> Resumo do papel da interface.
+
+**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+
+Classes que representam objetos JSON associados às mensagens da interface:
+
+![Diagrama Classes REST](images/diagrama-classes-rest.png)
+
+~~~json
+<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+~~~
+
+Detalhamento da mensagem JSON:
+
+Atributo | Descrição
+-------| --------
+`<nome do atributo>` | `<objetivo do atributo>`
+
+## Componente `Recommendation`
+
+> <Resumo do papel do componente e serviços que ele oferece.>
+
+![Componente Recommendation](componente-recommendation.png)
+
+**Interfaces**
+> * IOrder;
+> * IPayment;
+> * IAuction.
+
+As interfaces listadas são detalhadas a seguir:
+
+## Detalhamento das Interfaces
+
+### Interface `<nome da interface>`
+
+> Resumo do papel da interface.
+
+**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+
+Classes que representam objetos JSON associados às mensagens da interface:
+
+![Diagrama Classes REST](images/diagrama-classes-rest.png)
+
+~~~json
+<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+~~~
+
+Detalhamento da mensagem JSON:
+
+Atributo | Descrição
+-------| --------
+`<nome do atributo>` | `<objetivo do atributo>`
+
+## Componente `Auction`
+
+> <Resumo do papel do componente e serviços que ele oferece.>
+
+![Componente Auction](componente-auction.png)
+
+**Interfaces**
+> * IAuction;
+> * ICreateAuction.
+
+As interfaces listadas são detalhadas a seguir:
+
+## Detalhamento das Interfaces
+
+### Interface `<nome da interface>`
+
+> Resumo do papel da interface.
+
+**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+
+Classes que representam objetos JSON associados às mensagens da interface:
+
+![Diagrama Classes REST](images/diagrama-classes-rest.png)
+
+~~~json
+<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+~~~
+
+Detalhamento da mensagem JSON:
+
+Atributo | Descrição
+-------| --------
+`<nome do atributo>` | `<objetivo do atributo>`
 
 # Nível 2
 

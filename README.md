@@ -14,6 +14,7 @@
   - [Componente `Buyer`](#componente-buyer)
   - [Componente `Product`](#componente-product)
   - [Componente `Order`](#componente-order)
+  - [Componente `Payment`](#componente-payment)
   - [Componente `Seller`](#componente-seller)
   - [Componente `Shipping`](#componente-shipping)
   - [Componente `Recommendation`](#componente-recommendation)
@@ -35,14 +36,14 @@
 
 * O `componente Buyer` inicia o processo de compra publicando no barramento a mensagem de tópico `"product/search"` através da interface ISearch;
 * O `componente Product` assina no barramento de mensagens de tópico `"product/search"` através da `interface ISearch`. Quando recebe uma mensagem, ele mostra os produtos;
-* O `componente Buyer` seleciona um produto publicando no barramento a mensagem de tópico `"product/{id}/details"` através da `interface IProduct`;
-* O `componente Product` assina no barramento de mensagens de tópico `"product/{id}/details"` através da `interface IProduct`. Quando recebe uma mensagem, ele mostra os dados do produto selecionado;
-* O `componente Buyer` publica no barramento de mensagem de tópico `"order/{fornecedorId}/create/{produtoId}"` através da `interface IOrder` realizando o pedido;
-* O `componente Order` assina no barramento de mensagens de tópico `"order/{fornecedorId}create/{produtoId}"` através da `interface IOrder`. Quando recebe uma mensagem, ele valida as informações do pedido publicando no barramento de mensagem de tópico `"payment/check/{orderId}"` através da `interface IPayment`;
-* O `componente Payment` assina no barramento de mensagens de tópico `"payment/check/{orderId}"` através da `interface IPayment`. Quando recebe a mensagem,  ele publica no barramento de mensagem de tópico `"payment/order/{orderId}/denied"` através da `interface IPayment` caso o pagamento não foi aprovado ou publica no barramento de mensagem de tópico `"payment/order/{orderId}/confirmed"` atráves da `interface IPayment` caso o pagamento foi confirmado;
-* O `component Buyer` assina no barramento de mensagem de tópico `"payment/order/{orderId}/+"` através da `interface IPayment`. Quando recebe uma mensagem, ele verifica se o pedido foi confirmado ou negado;
-* O `componente Seller` assina no barramento de mensagem de tópico `"payment/order/{orderId}/confirmed"` através da `interface IPayment`. Quando ele recebe a mensagem, dá início ao processo de envio do produto publicando no barramento de mensagem de tópico `"dispatcher/order/{orderId}"` através da `interface ISeller`;
-* O `componente Shipping` assina no barramento de mensagem de tópico `"dispatcher/order/{orderId}"` através da `interface ISeller`. Quando recebe uma mensagem, ele publica no barramento de mensagens de tópico `"location/status"` através da `interface IShipping` atualizando o estado da entrega;
+* O `componente Buyer` seleciona um produto publicando no barramento a mensagem de tópico `"product/<id>/details"` através da `interface IProduct`;
+* O `componente Product` assina no barramento de mensagens de tópico `"product/<id>/details"` através da `interface IProduct`. Quando recebe uma mensagem, ele mostra os dados do produto selecionado;
+* O `componente Buyer` publica no barramento de mensagem de tópico `"order/<fornecedorId>/create/<produtoId>"` através da `interface IOrder` realizando o pedido;
+* O `componente Order` assina no barramento de mensagens de tópico `"order/<fornecedorId>create/<produtoId>"` através da `interface IOrder`. Quando recebe uma mensagem, ele valida as informações do pedido publicando no barramento de mensagem de tópico `"payment/check/<orderId>"` através da `interface IPayment`;
+* O `componente Payment` assina no barramento de mensagens de tópico `"payment/check/<orderId>"` através da `interface IPayment`. Quando recebe a mensagem,  ele publica no barramento de mensagem de tópico `"payment/order/<orderId>/denied"` através da `interface IPayment` caso o pagamento não foi aprovado ou publica no barramento de mensagem de tópico `"payment/order/<orderId>/confirmed"` atráves da `interface IPayment` caso o pagamento foi confirmado;
+* O `component Buyer` assina no barramento de mensagem de tópico `"payment/order/<orderId>/+"` através da `interface IPayment`. Quando recebe uma mensagem, ele verifica se o pedido foi confirmado ou negado;
+* O `componente Seller` assina no barramento de mensagem de tópico `"payment/order/<orderId>/confirmed"` através da `interface IPayment`. Quando ele recebe a mensagem, dá início ao processo de envio do produto publicando no barramento de mensagem de tópico `"dispatcher/order/<orderId>"` através da `interface ISeller`;
+* O `componente Shipping` assina no barramento de mensagem de tópico `"dispatcher/order/<orderId>"` através da `interface ISeller`. Quando recebe uma mensagem, ele publica no barramento de mensagens de tópico `"location/status"` através da `interface IShipping` atualizando o estado da entrega;
 * O `component Buyer` assina no barramento de mensagem de tópico `"location/status"` através da `interface IShipping`. Quando recebe uma mensagem, exibe as informações da entrega;
 * O `componente Seller` assina no barramento de mensagem de tópico `"location/status"` através da `interface IShipping`. Quando ele recebe a mensagem, atualiza as informações na base de dados;
 * O `componente Recommendation` assina o tópico `"order/create"` atraveś da `interface IOrder` para monitorar os produtos mais requisitados e seus respectivos fornecedores afim de melhorar o seu algoritmo de recomendação. Além disso, também assina o tópico `"payment/order/+"` através da `interface IPayment` para entender qual é a forma de pagamento mais comum praticado pelos compradores.
@@ -50,20 +51,21 @@
 #### Leilão Invertido <!-- omit in toc -->
 
 * O `componente Buyer` inicia o processo de leilão publicando no barramento a mensagem de tópico `"auction/create"` através da `interface ICreateAuction`;
-* O `componente Auction` assina no barramento de mensagem de tópico `"auction/create"` através da `interface ICreateAuction`. Quando ele recebe a mensagem, ele inicia o leilão com o produto que o comprador deseja e com um tempo limite publicando uma mensagem no barramento de tópico `"auction/{auctionId}/begin"` através da `interface IAuction`;
-* O `componente Seller` assina no barramento de mensagem de tópico `"auction/{auctionId}/begin"` através da `interface IAuction`. Quando recebe uma mensagem, os fornecedores podem enviar seus lances para o produto desejado publicando no barramento de mensagens de tópico `"auction/{auctionId}/bid"` através da `interface IAuction`;
-* O `componente Seller` assina no barramento de mensagem de tópico `"auction/{auctionId}/bid"` através da `interface IAuction`. Quando recebe uma mensagem, o fornecedor verifica o novo lance do fornecedor concorrente e determina se vai oferecer um valor menor publicando outra mensagem no barramento usando o mesmo tópico e interface;
-* O `componente Buyer` assina no barramento de mensagem de tópico `"auction/{auctionId}/bid"` através da `interface IAuction`. Quando recebe uma mensagem, o comprador pode ver os lances do leilão;
-* O `componente Auction` informa o final do leilão publicando uma mensagem no barramento de tópico `"auction/{auctionId}/finish"` através da `interface IAuction`;
-* O `componente Buyer` assina no barramento de mensagem de tópico `"auction/{auctionId}/finish"` através da `interface IAuction`. Quando recebe uma mensagem, o comprador pode ver lance final;
-* O `componente Seller` assina no barramento de mensagem de tópico `"auction/{auctionId}/finish"` através da `interface IAuction`. Quando recebe uma mensagem, o informa ao fornecedor que ofereceu o menor lance que ele ganhou o leilão;
+* O `componente Auction` assina no barramento de mensagem de tópico `"auction/create"` através da `interface ICreateAuction`. Quando ele recebe a mensagem, ele inicia o leilão com o produto que o comprador deseja e com um tempo limite publicando uma mensagem no barramento de tópico `"auction/<auctionId>/begin"` através da `interface IAuction`;
+* O `componente Seller` assina no barramento de mensagem de tópico `"auction/<auctionId>/begin"` através da `interface IAuction`. Quando recebe uma mensagem, os fornecedores podem enviar seus lances para o produto desejado publicando no barramento de mensagens de tópico `"auction/<auctionId>/bid"` através da `interface IAuctionBid`;
+* * O `componente Auction` assina no barramento de mensagem de tópico `"auction/<auctionId>/bid"` através da `interface IAuctionBid`. Quando recebe uma mensagem, o leilão monitora os lances do leilão;
+* O `componente Seller` assina no barramento de mensagem de tópico `"auction/<auctionId>/bid"` através da `interface IAuctionBid`. Quando recebe uma mensagem, o fornecedor verifica o novo lance do fornecedor concorrente e determina se vai oferecer um valor menor publicando outra mensagem no barramento usando o mesmo tópico e interface;
+* O `componente Buyer` assina no barramento de mensagem de tópico `"auction/<auctionId>/bid"` através da `interface IAuctionBid`. Quando recebe uma mensagem, o comprador pode ver os lances do leilão;
+* O `componente Auction` informa o final do leilão publicando uma mensagem no barramento de tópico `"auction/<auctionId>/finish"` através da `interface IAuction`;
+* O `componente Buyer` assina no barramento de mensagem de tópico `"auction/<auctionId>/finish"` através da `interface IAuction`. Quando recebe uma mensagem, o comprador pode ver lance final;
+* O `componente Seller` assina no barramento de mensagem de tópico `"auction/<auctionId>/finish"` através da `interface IAuction`. Quando recebe uma mensagem, informa ao fornecedor que ofereceu o menor lance que ele ganhou o leilão;
 * O `componente Recommendation` assina o tópico `"auction/+/finish"` atraveś da `interface IAuction` para monitorar o produto, o menor preço e o fornecedor.
 
 ## Componente `Buyer`
 
-> <Resumo do papel do componente e serviços que ele oferece.>
+Este componente é responsável por administradar as funções relativas ao comprador. Seus serviços são 
 
-![Componente Buyer](componente-buyer.png)
+> ![Componente Buyer](images/componente-buyer.png)
 
 **Interfaces**
 > * ISearch;
@@ -80,33 +82,54 @@ As interfaces listadas são detalhadas a seguir:
 
 ### Interface `ISearch` <!-- omit in toc -->
 
-> Resumo do papel da interface.
+Esta interface é uma fonte de dados para busca de produtos.
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+**Tópico**: `product/search`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
+> ![Diagrama Classes ISearch](images/diagrama-classes-isearch.png)
 
 ~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+{
+  "query": "camisetas",
+  "price_range": {
+    "min": "50.0",
+    "max": "300.0"
+  },
+  "category_id": "2",
+  "brand_id": "3"
+}
 ~~~
 
 Detalhamento da mensagem JSON:
 
+**Query**
+
 Atributo | Descrição
 -------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
+`query` | `O termo para fazer uma busca por produtos`
+`price_range` | `O intervalo de preço do produto`
+`category_id` | `O id da categoria de produto`
+`brand_id` | `O id da marca de produto`
+
+**Price Range**
+
+Atributo | Descrição
+-------| --------
+`min` | `O preço mínimo do produto`
+`max` | `O preço máximo do produto`
+
 
 ### Interface `IProduct` <!-- omit in toc -->
 
-> Resumo do papel da interface.
+> Esta interface é responsável por requisitar os dados de um produto.
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+**Tópico**: `product/<id>/details`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
+![Diagrama Classes IProduct](images/diagrama-classes-iproduct.png)
 
 ~~~json
 <Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
@@ -120,13 +143,13 @@ Atributo | Descrição
 
 ### Interface `IOrder` <!-- omit in toc -->
 
-> Resumo do papel da interface.
+> Esta interface é responsável por prover os dados para um novo pedido.
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+**Tópico**: `order/<fornecedorId>/create/<produtoId>`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
+![Diagrama Classes IOrder](images/diagrama-classes-iorder.png)
 
 ~~~json
 <Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
@@ -140,13 +163,13 @@ Atributo | Descrição
 
 ### Interface `IPayment` <!-- omit in toc -->
 
-> Resumo do papel da interface.
+> Esta interface é responsável por requisitar a confirmação do pagamento do pedido.
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+**Tópico**: `payment/order/<orderId>/+`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
+![Diagrama Classes IPayment](images/diagrama-classes-ipayment.png)
 
 ~~~json
 <Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
@@ -160,9 +183,9 @@ Atributo | Descrição
 
 ### Interface `IShipping` <!-- omit in toc -->
 
-> Resumo do papel da interface.
+> Esta interface é responsável por requisitar a situação da entrega.
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+**Tópico**: `location/status`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
@@ -326,7 +349,7 @@ Atributo | Descrição
 -------| --------
 `<nome do atributo>` | `<objetivo do atributo>`
 
-## Componente `Payment` <!-- omit in toc -->
+## Componente `Payment`
 
 > <Resumo do papel do componente e serviços que ele oferece.>
 
@@ -592,7 +615,8 @@ Atributo | Descrição
 
 **Interfaces**
 > * IAuction;
-> * ICreateAuction.
+> * ICreateAuction;
+> * IAuctionBid;
 
 As interfaces listadas são detalhadas a seguir:
 
@@ -619,6 +643,26 @@ Atributo | Descrição
 `<nome do atributo>` | `<objetivo do atributo>`
 
 ### Interface `ICreateAuction` <!-- omit in toc -->
+
+> Resumo do papel da interface.
+
+**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+
+Classes que representam objetos JSON associados às mensagens da interface:
+
+![Diagrama Classes REST](images/diagrama-classes-rest.png)
+
+~~~json
+<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+~~~
+
+Detalhamento da mensagem JSON:
+
+Atributo | Descrição
+-------| --------
+`<nome do atributo>` | `<objetivo do atributo>`
+
+### Interface `IAuctionBid` <!-- omit in toc -->
 
 > Resumo do papel da interface.
 

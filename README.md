@@ -53,7 +53,7 @@
 * O `componente Buyer` inicia o processo de leilão publicando no barramento a mensagem de tópico `"auction/create"` através da `interface ICreateAuction`;
 * O `componente Auction` assina no barramento de mensagem de tópico `"auction/create"` através da `interface ICreateAuction`. Quando ele recebe a mensagem, ele inicia o leilão com o produto que o comprador deseja e com um tempo limite publicando uma mensagem no barramento de tópico `"auction/<auctionId>/begin"` através da `interface IAuction`;
 * O `componente Seller` assina no barramento de mensagem de tópico `"auction/<auctionId>/begin"` através da `interface IAuction`. Quando recebe uma mensagem, os fornecedores podem enviar seus lances para o produto desejado publicando no barramento de mensagens de tópico `"auction/<auctionId>/bid"` através da `interface IAuctionBid`;
-* * O `componente Auction` assina no barramento de mensagem de tópico `"auction/<auctionId>/bid"` através da `interface IAuctionBid`. Quando recebe uma mensagem, o leilão monitora os lances do leilão;
+* O `componente Auction` assina no barramento de mensagem de tópico `"auction/<auctionId>/bid"` através da `interface IAuctionBid`. Quando recebe uma mensagem, o leilão monitora os lances do leilão;
 * O `componente Seller` assina no barramento de mensagem de tópico `"auction/<auctionId>/bid"` através da `interface IAuctionBid`. Quando recebe uma mensagem, o fornecedor verifica o novo lance do fornecedor concorrente e determina se vai oferecer um valor menor publicando outra mensagem no barramento usando o mesmo tópico e interface;
 * O `componente Buyer` assina no barramento de mensagem de tópico `"auction/<auctionId>/bid"` através da `interface IAuctionBid`. Quando recebe uma mensagem, o comprador pode ver os lances do leilão;
 * O `componente Auction` informa o final do leilão publicando uma mensagem no barramento de tópico `"auction/<auctionId>/finish"` através da `interface IAuction`;
@@ -108,7 +108,7 @@ Detalhamento da mensagem JSON:
 
 Atributo | Descrição
 -------| --------
-`query` | `O termo para fazer uma busca por produtos`
+`term` | `O termo para fazer uma busca por produtos`
 `price_range` | `O intervalo de preço do produto`
 `category_id` | `O id da categoria de produto`
 `brand_id` | `O id da marca de produto`
@@ -123,7 +123,7 @@ Atributo | Descrição
 
 ### Interface `IProduct` <!-- omit in toc -->
 
-> Esta interface é responsável por requisitar os dados de um produto.
+Esta interface é uma fonte de dados ver os detalhes de um produto.
 
 **Tópico**: `product/<id>/details`
 

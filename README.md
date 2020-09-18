@@ -63,18 +63,18 @@
 
 ## Componente `Buyer`
 
-Este componente é responsável por administradar as funções relativas ao comprador. Seus serviços são 
+Este componente é responsável por administrar as funções relativas ao comprador. Seus serviços são 
 
-> ![Componente Buyer](images/componente-buyer.png)
+![Componente Buyer](images/componente-buyer.png)
 
 **Interfaces**
-> * ISearch;
-> * IProduct;
-> * IOrder;
-> * IPayment;
-> * IShipping;
-> * ICreateAuction;
-> * IAuction.
+* ISearch;
+* IProduct;
+* IOrder;
+* IPayment;
+* IShipping;
+* ICreateAuction;
+* IAuction.
 
 As interfaces listadas são detalhadas a seguir:
 
@@ -88,7 +88,7 @@ Esta interface é uma fonte de dados para busca de produtos.
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-> ![Diagrama Classes ISearch](images/diagrama-classes-isearch.png)
+![Diagrama Classes ISearch](images/diagrama-classes-isearch.png)
 
 ~~~json
 {

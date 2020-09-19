@@ -33,6 +33,10 @@
     - [Interface `IAuctionNewBid`](#interface-iauctionnewbid)
   - [Componente `Detalhar Leilão`](#componente-detalhar-leilão)
 - [Multiplas Interfaces](#multiplas-interfaces)
+  - [Descrição](#descrição)
+    - [Frontend](#frontend)
+    - [Backend](#backend)
+    - [Banco de Dados](#banco-de-dados)
 
 # Nível 1
 
@@ -1076,8 +1080,23 @@ Método | Objetivo
 
 # Multiplas Interfaces
 
-> Escreva um texto detalhando como seus componentes  podem ser preparados para que seja possível trocar de interface apenas trocando o componente View e mantendo o Model e Controller.
->
-> É recomendado a inserção de, pelo menos, um diagrama que deve ser descrito no texto. O formato do diagrama é livre e deve ilustrar a arquitetura proposta.
+## Descrição
+
+Uma solução para o problema descrito, seria utilizar uma arquitetura distribuída na nuvem baseada em eventos. Pensamos em 3 (três) serviços: Frontend, Backend e Banco de Dados. Estes serviços utilizam um barramento de mensagens para publicar e escutar os eventos.
+Uma vantagem desta arquitetura, seria a possibilidade de adicionar ou remover novos serviços, como por exemplo um serviço de Big Data, no sistema.
 
 ![Multiplas Interfaces](images/multiplas-interfaces.png)
+
+### Frontend
+
+No serviço de Frontend, está a aplicação Mobile e a aplicação Web. O desenvolvimento da aplicação Mobile utilizará o Framework Flutter que usa a linguagem Dart. O motivo de utilizar este framework é sua capacidade de criar aplicações para Android ou iOS com bom desempenho, além disso ele é opensource e está em pleno desenvolvimento pela comunidade. Outra vantagem é de que no futuro próximo, poderemos utilizar o framework para desenvolver também a aplicação Web, pois esta será uma de suas funções disponíveis.
+Em um primeiro momento, a aplicação Web será desenvolvida no framework React. O React utiliza a linguagem JavaScript, também é opensource e é a biblioteca mais utilizada para criar aplicações SPA. Ele é muito fácil de utilizar e possui integrações com vários APIs de terceiros.
+
+
+### Backend
+
+No serviço de Backend, utilizaremos a linguagem Python e o framework Flask. A linguagem Python é uma linguagem muito utilizada no mercado, além de ser opensource ela possui muitas bibliotecas para os mais diversos tipos de serviços. O Flask é um framework para desenvolver aplicações Web, ele é indicado para aplicações simples e é possível prover uma API REST rapidamente.
+
+### Banco de Dados
+
+No serviço de Banco de Dados, utilizaremos a ferramenta MySQL. O MySQL é um sistema de gerenciamento de banco de dados relacional robusto, estável e de fácil manuseio.

@@ -765,48 +765,19 @@ O Componente Recomendation assina os tópicos abaixo detalhado para monitorar e 
 
 ### Interface `IOrder` <!-- omit in toc -->
 
-> Detalhes da interface encontra-se disponível em [Interface IOrder](#interface-iorder--1)
+Detalhes da interface encontra-se disponível em [Interface IOrder](#interface-iorder--1)
 
-**Tópico**: `order/<sellerId>/create/<produtoId>`
-
-Classes que representam objetos JSON associados às mensagens da interface:
-
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
-
-~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
-~~~
-
-Detalhamento da mensagem JSON:
-
-Atributo | Descrição
--------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
+**Tópico**: `order/+/create/+`
 
 ### Interface `IPayment` <!-- omit in toc -->
 
-> Detalhes da interface encontra-se disponível em [Interface IPayment](#interface-ipayment--2) 
+Detalhes da interface encontra-se disponível em [Interface IPayment](#interface-ipayment--2) 
 
 **Tópico**: `payment/order/+`
 
-Classes que representam objetos JSON associados às mensagens da interface:
-
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
-
-~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
-~~~
-
-Detalhamento da mensagem JSON:
-
-Atributo | Descrição
--------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
-
 ### Interface `IAuction` <!-- omit in toc -->
 
-> Detalhes da interface encontra-se disponível em [Interface IAuction](#interface-iauction--3)
-
+Detalhes da interface encontra-se disponível em [Interface IAuction](#interface-iauction--3)
 
 ## Componente `Auction`
 

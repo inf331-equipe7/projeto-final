@@ -704,11 +704,11 @@ O Componente Recomendation assina os tópicos abaixo detalhado para monitorar e 
 
 ### Interface `IOrder` <!-- omit in toc -->
 
-Detalhes da interface encontra-se disponível em [Interface Order](#Interface-Order)
+Detalhes da interface encontra-se disponível em [Interface IOrder](#interface-iorder--1)
 
 ### Interface `IPayment` <!-- omit in toc -->
 
-Detalhes da interface encontra-se disponível em [Interface Payment](#Interface-Payment) 
+Detalhes da interface encontra-se disponível em [Interface IPayment](#interface-ipayment--2) 
 
 ### Interface `IAuction` <!-- omit in toc -->
 

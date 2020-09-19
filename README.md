@@ -638,7 +638,7 @@ Atributo | Descrição
 Esse componente é resposnsável por administrar as funções relativas ao vendedor.
 Ela é representada pelo Component a seguir: 
 
-![Componente Shipping](https://github.com/inf331-equipe7/projeto-final/blob/master/images/component-shipping.PNG)
+![Componente Shipping](images/component-shipping.PNG)
 
 **Interfaces**
 * IShipping;
@@ -656,7 +656,7 @@ Essa interface é a parte de atualização do estado de entrega.
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](https://github.com/inf331-equipe7/projeto-final/blob/master/images/component-shipping-ishipping.PNG)
+![Diagrama Classes REST](images/component-shipping-ishipping.PNG)
 
 ~~~json
 {
@@ -706,7 +706,7 @@ Essa interface é a parte da comunicação entre Seller e Shipping.
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](https://github.com/inf331-equipe7/projeto-final/blob/master/images/component-shipping-iseller.PNG)
+![Diagrama Classes REST](images/component-shipping-iseller.PNG)
 
 ~~~json
 {

@@ -179,14 +179,26 @@ Classes que representam objetos JSON associados às mensagens da interface:
 ![Diagrama Classes IPayment](images/diagrama-classes-ipayment.png)
 
 ~~~json
-{}
+{
+  "transactionId": 007,
+  "order": 2020411456,
+  "paymentType": "Credit",
+  "dataPagamento": "2020-09-18",
+  "totalCost": 100.00,
+  "status": "aprovado"
+}
 ~~~
 
 Detalhamento da mensagem JSON:
 
 Atributo | Descrição
--------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
+-------         | --------
+`transactionId` | `identificador da transação de pagamento`
+`order`         | `numero da ordem que está sendo paga nessa transação`
+`paymentType`   | `forma de pagamento (crédito, debito, boleto)`
+`date`          | `data da transação`
+`totalCost`     | `preço final do pagamento`
+`status`        | `aprovado ou recusado`
 
 ### Interface `IShipping` <!-- omit in toc -->
 
@@ -443,7 +455,7 @@ Atributo | Descrição
 
 ## Componente `Payment`
 
-> Payment é o componente que efetua o pagamento de um pedido realizado, verificando se o pagamento foi ou não aprovado.
+Payment é o componente que efetua o pagamento de um pedido realizado, verificando se o pagamento foi ou não aprovado.
 
 ![Componente Payment](images/componente-payment.png)
 
@@ -458,11 +470,11 @@ As interfaces listadas são detalhadas a seguir:
 
 > Resumo do papel da interface.
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+**Tópico**: `payment/check/{orderId}`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](images/diagrama-classes-rest.png) 
+![Diagrama Classes REST](images/diagrama-classes-ipayment.png) 
 
 ~~~json
 {
@@ -470,7 +482,8 @@ Classes que representam objetos JSON associados às mensagens da interface:
   "order": 2020411456,
   "paymentType": "Credit",
   "dataPagamento": "2020-09-18",
-  "totalCost": 100.00
+  "totalCost": 100.00,
+  "status": "aprovado"
   }
 ~~~
 

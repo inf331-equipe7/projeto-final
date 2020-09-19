@@ -804,7 +804,26 @@ Atributo | Descrição
 
 ### Detalhamento da interação de componentes <!-- omit in toc -->
 
-
+* O componente `Auction Controller` assina no barramento de mensagens de tópico `"auction/create"` através da `interface ICreateAuction`.
+  * Ao receber uma mensagem neste tópico, dispara o início de um leilão.
+  * Internamente este evento é atendido por uma interface provida do componente `Gerencia Leilão`, que é responsável por administrar os leilões.
+    * Este componente cria um novo leilão acionando o componente `Manter Leilão` através da `interface IManageAuction`.
+    * O componente `Manter Leilão` acessa os componentes de Model associados através da interface requerida externa `Atualizar Dados`.
+    * Iniciado o leilão, o componente `Manter Leilão` notifica externamente para o barramento de tópico `"auction/<auctionId>/begin"` que é possível fazer lances através da `interface IAuction`.
+* O componente `Auction View` assina no barramento de mensagens de tópico `"auction/<auctionId>/begin"` através da `interface ICreateAuction`.
+  * Ao receber uma mensagem neste tópico, dispara a possibilidade de vendedores realizarem lances para o leilão.
+  * Internamente este evento é atendido por uma interface provida do componente `Montar telas leilão`, que é responsável por montar as telas de leilão.
+    * Este componente mostra os detalhes do leilão através do componente `Detalhar o Leilão` através da `interface IAuctionDetails`.
+* Para fazer um novo lance, o componente `Montar telas leilão` pede ao componente `Formulário Novo Lance` através da `interface IAuctionNewBid` os dados do novo lance.
+  * Ao receber os dados, o componente `Montar telas leilão` publica os dados externamente no barramento pelo tópico `"auction/<auctionId>/bid"` através da mesma `interface IAuction`.
+* O componente `Auction Controller` assina no barramento de mensagens de tópico `"auction/<auctionId>/bid"` através da `interface IAuction`.
+  * Ao receber uma mensagem neste tópico, dispara o gerenciamento os lances.
+  * Este componente gerencia os lances acionando o componente `Gerenciar Lance` através da `interface IAuctionBid`.
+  * O componente `Gerenciar Lance` atualiza os componentes de cada Model associados através da interface requerida externa `Atualizar Dados`. Além disso, para cada lance este mesmo componente publica no barramento externo de tópico `"auction/<auctionId>/bid"` através da `interface IAuction` a atualização dos lances.
+* O componente `Auction View` assina no barramento de mensagens de tópico `"auction/<auctionId>/bid"` através da `interface IAuction`.
+  * Ao receber uma mensagem neste tópico, os leilões são atualizados.
+  * Internamente este evento é atendido por uma interface provida do componente `Montar telas leilão`, que é responsável por montar as telas de leilão.
+    * Este componente mostra as atualizações do leilão através do componente `Detalhar o Leilão` através da `interface IAuctionDetails`.
 
 ## Componente `<Nome do Componente>`
 

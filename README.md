@@ -24,7 +24,11 @@
       - [Criação de leilão](#criação-de-leilão)
       - [Lances](#lances)
       - [Término de leilão](#término-de-leilão)
-  - [Componente `<Nome do Componente>`](#componente-nome-do-componente)
+  - [Componente `Gerencia Leilão`](#componente-gerencia-leilão)
+    - [Interface `IAuction` <!-- omit in toc →](#interface-iauction----omit-in-toc-)
+    - [Interface `ICreateAuction` <!-- omit in toc →](#interface-icreateauction----omit-in-toc-)
+  - [Componente `Manter Leilão`](#componente-manter-leilão)
+    - [Interface `IAuction` <!-- omit in toc →](#interface-iauction----omit-in-toc--1)
 - [Multiplas Interfaces](#multiplas-interfaces)
 
 # Nível 1
@@ -731,7 +735,7 @@ As interfaces listadas são detalhadas a seguir:
 
 ### Interface `IAuction` <!-- omit in toc -->
 
-Essa interface é responsável por criar e manter o processo de leilão, permitindo aos Sellers cadastrarem propostas.
+Essa interface é responsável por atualizar e manter o processo de leilão, permitindo aos Sellers cadastrarem propostas.
 
 **Tópico**: `auction/<auctionId>/bid` e `auction/{auctionId}/finish`
 
@@ -841,28 +845,57 @@ Atributo | Descrição
   * Internamente este evento é atendido por uma interface provida do componente `Montar telas leilão`, que é responsável por montar as telas de leilão.
     * Este componente anuncia o término do leilão através do componente `Detalhar o Leilão` através da `interface IAuctionDetails`.
 
-## Componente `<Nome do Componente>`
+## Componente `Gerencia Leilão`
+ 
+Este componente é responsável por gerenciar os leilões no controller.
+ 
+![Componente Gerencia Leilão](images/componente-gerencialeilao.png)
+ 
+**Interfaces**
+* IAuction
+* ICreateAuction
+ 
+As interfaces listadas são detalhadas a seguir:
+ 
+## Detalhamento das Interfaces <!-- omit in toc -->
+ 
+### Interface `IAuction` <!-- omit in toc →
 
-> <Resumo do papel do componente e serviços que ele oferece.>
+Detalhes da interface encontra-se disponível em [Interface IAuction](#interface-iauction--3)
 
-![Componente](images/diagrama-componente.png)
+### Interface `ICreateAuction` <!-- omit in toc →
+
+Detalhes da interface encontra-se disponível em [Interface ICreateAuction](#interface-icreateauction--1)
+
+## Componente `Manter Leilão`
+
+Este componente é responsável criar e terminar um leilão internamente no controller.
+
+![Componente Manter Leilão](images/componente-manter-leilão.png)
 
 **Interfaces**
-> * Listagem das interfaces do componente.
+* IManageAuction
+* IAuction
 
 As interfaces listadas são detalhadas a seguir:
 
 ## Detalhamento das Interfaces <!-- omit in toc -->
 
-### Interface `<nome da interface>` <!-- omit in toc -->
+### Interface `IManageAuction` <!-- omit in toc -->
 
-> ![Diagrama da Interface](images/diagrama-interface-itableproducer.png)
+> ![Diagrama da Interface IManageAuction](images/diagrama-interface-imanageauction.png)
 
-> <Resumo do papel da interface.>
+Esta interface fornece os métodos para criar e terminar um leilão.
 
 Método | Objetivo
 -------| --------
-`<id do método>` | `<objetivo do método e descrição dos parâmetros>`
+`createAuction(productId)` | `Cria um novo leilão passando o id do produto`
+`terminateAuction(auctionId)` | `Termina um leilão passando o id do leilão`
+
+### Interface `IAuction` <!-- omit in toc →
+
+Detalhes da interface encontra-se disponível em [Interface IAuction](#interface-iauction--3)
+
 
 # Multiplas Interfaces
 

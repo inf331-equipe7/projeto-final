@@ -176,7 +176,7 @@ Esta interface escuta um evento para verificar se o pagamento de um pedido foi n
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes IPayment](images/diagrama-classes-ipayment.png)
+![Diagrama Classes IPayment](images/diagrama-classes-rest-payment.png)
 
 ~~~json
 {
@@ -474,7 +474,7 @@ As interfaces listadas são detalhadas a seguir:
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](images/diagrama-classes-ipayment.png) 
+![Diagrama Classes REST](images/diagrama-classes-rest-payment.png) 
 
 ~~~json
 {

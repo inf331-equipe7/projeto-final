@@ -351,9 +351,9 @@ Atributo | Descrição
 
 ## Componente `Payment`
 
-> <Resumo do papel do componente e serviços que ele oferece.>
+> Payment é o componente que efetua o pagamento de um pedido realizado, verificando se o pagamento foi ou não aprovado.
 
-![Componente Payment](componente-payment.png)
+![Componente Payment](images/componente-payment.png)
 
 **Interfaces**
 > * IPayment.
@@ -370,10 +370,17 @@ As interfaces listadas são detalhadas a seguir:
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
+![Diagrama Classes REST](images/diagrama-classes-rest.png) 
 
 ~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+{
+  "transactionId": 007,
+  "order": 2020411456,
+  "paymentType": "Credit",
+  "dataPagamento": "2020-09-18",
+  "totalCust": 100.00
+  }
+
 ~~~
 
 Detalhamento da mensagem JSON:

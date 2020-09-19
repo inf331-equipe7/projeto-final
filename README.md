@@ -378,16 +378,22 @@ Classes que representam objetos JSON associados às mensagens da interface:
   "order": 2020411456,
   "paymentType": "Credit",
   "dataPagamento": "2020-09-18",
-  "totalCust": 100.00
+  "totalCost": 100.00
   }
-
 ~~~
 
 Detalhamento da mensagem JSON:
 
 Atributo | Descrição
--------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
+-------         | --------
+`transactionId` | `identificador da transação de pagamento`
+`order`         | `numero da ordem que está sendo paga nessa transação`
+`paymentType`   | `forma de pagamento (crédito, debito, boleto)`
+`date`          | `data da transação`
+`totalCost`     | `preço final do pagamento`
+`status`        | `aprovado ou recusado`
+
+<p>&nbsp;</p>
 
 ## Componente `Seller`
 

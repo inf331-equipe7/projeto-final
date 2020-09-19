@@ -20,7 +20,10 @@
   - [Componente `Recommendation`](#componente-recommendation)
   - [Componente `Auction`](#componente-auction)
 - [Nível 2](#nível-2)
-  - [Diagrama do Nível 2](#diagrama-do-nível-2)
+  - [Diagrama do Nível 2 - Componente Auction](#diagrama-do-nível-2---componente-auction)
+      - [Criação de leilão](#criação-de-leilão)
+      - [Lances](#lances)
+      - [Término de leilão](#término-de-leilão)
   - [Componente `<Nome do Componente>`](#componente-nome-do-componente)
 - [Multiplas Interfaces](#multiplas-interfaces)
 
@@ -798,11 +801,13 @@ Atributo | Descrição
 
 # Nível 2
 
-## Diagrama do Nível 2
+## Diagrama do Nível 2 - Componente Auction
 
 > ![Modelo de diagrama no nível 2](images/diagrama-subcomponentes.png)
 
 ### Detalhamento da interação de componentes <!-- omit in toc -->
+
+#### Criação de leilão
 
 * O componente `Auction Controller` assina no barramento de mensagens de tópico `"auction/create"` através da `interface ICreateAuction`.
   * Ao receber uma mensagem neste tópico, dispara o início de um leilão.
@@ -814,6 +819,9 @@ Atributo | Descrição
   * Ao receber uma mensagem neste tópico, dispara a possibilidade de vendedores realizarem lances para o leilão.
   * Internamente este evento é atendido por uma interface provida do componente `Montar telas leilão`, que é responsável por montar as telas de leilão.
     * Este componente mostra os detalhes do leilão através do componente `Detalhar o Leilão` através da `interface IAuctionDetails`.
+
+#### Lances
+
 * Para fazer um novo lance, o componente `Montar telas leilão` pede ao componente `Formulário Novo Lance` através da `interface IAuctionNewBid` os dados do novo lance.
   * Ao receber os dados, o componente `Montar telas leilão` publica os dados externamente no barramento pelo tópico `"auction/<auctionId>/bid"` através da mesma `interface IAuction`.
 * O componente `Auction Controller` assina no barramento de mensagens de tópico `"auction/<auctionId>/bid"` através da `interface IAuction`.
@@ -824,6 +832,14 @@ Atributo | Descrição
   * Ao receber uma mensagem neste tópico, os leilões são atualizados.
   * Internamente este evento é atendido por uma interface provida do componente `Montar telas leilão`, que é responsável por montar as telas de leilão.
     * Este componente mostra as atualizações do leilão através do componente `Detalhar o Leilão` através da `interface IAuctionDetails`.
+
+#### Término de leilão
+
+* O componente `Auction Controller` publica no barramento de mensagens de tópico `"auction/<auctionId>/finish"` através da `interface IAuction`.
+* O componente `Auction View` assina no barramento de mensagens de tópico `"auction/<auctionId>/finish"` através da `interface IAuction`.
+  * Ao receber uma mensagem neste tópico, dispara o término de um leilão.
+  * Internamente este evento é atendido por uma interface provida do componente `Montar telas leilão`, que é responsável por montar as telas de leilão.
+    * Este componente anuncia o término do leilão através do componente `Detalhar o Leilão` através da `interface IAuctionDetails`.
 
 ## Componente `<Nome do Componente>`
 

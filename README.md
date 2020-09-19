@@ -712,23 +712,7 @@ Detalhes da interface encontra-se disponível em [Interface IPayment](#interface
 
 ### Interface `IAuction` <!-- omit in toc -->
 
-> Resumo do papel da interface.
-
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
-
-Classes que representam objetos JSON associados às mensagens da interface:
-
-![Diagrama Classes REST](images/diagrama-classes-iauction.png)
-
-~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
-~~~
-
-Detalhamento da mensagem JSON:
-
-Atributo | Descrição
--------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
+Detalhes da interface encontra-se disponível em [Interface IAuction](#interface-iauction--3) 
 
 ## Componente `Auction`
 

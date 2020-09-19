@@ -566,24 +566,11 @@ Detalhes da interface encontra-se disponível em [Interface IShipping](#interfac
 
 ### Interface `IAuction` <!-- omit in toc -->
 
-> Resumo do papel da interface.
+Esta interface escuta sobre o tópico de inicio de leilão. Além disso, ele dispara eventos participando dos leilões com lances sobre um determinado produto.
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+**Tópico**: `auction/<auctionId>/begin` e `auction/<auctionId>/bid`
 
-Classes que representam objetos JSON associados às mensagens da interface:
-
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
-
-~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
-~~~
-
-Detalhamento da mensagem JSON:
-
-Atributo | Descrição
--------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
-
+Detalhes da interface encontra-se disponível em [Interface IAuction](#interface-iauction--3)
 
 ## Componente `Shipping`
 
@@ -720,6 +707,8 @@ Detalhes da interface encontra-se disponível em [Interface IPayment](#interface
 **Tópico**: `payment/order/+`
 
 ### Interface `IAuction` <!-- omit in toc -->
+
+**Tópico**: `auction/{auctionId}/finish`
 
 Detalhes da interface encontra-se disponível em [Interface IAuction](#interface-iauction--3)
 

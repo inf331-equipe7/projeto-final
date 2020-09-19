@@ -12,9 +12,9 @@
 - [Nível 1](#nível-1)
   - [Diagrama Geral do Nível 1](#diagrama-geral-do-nível-1)
   - [Componente `Buyer`](#componente-buyer)
-  - [Componente `Product`](#componente-product) #Simeao
-  - [Componente `Order`](#componente-order) #Shida
-  - [Componente `Payment`](#componente-payment) #Nicholas
+  - [Componente `Product`](#componente-product)
+  - [Componente `Order`](#componente-order)
+  - [Componente `Payment`](#componente-payment)
   - [Componente `Seller`](#componente-seller)
   - [Componente `Shipping`](#componente-shipping)
   - [Componente `Recommendation`](#componente-recommendation)
@@ -198,7 +198,8 @@ Classes que representam objetos JSON associados às mensagens da interface:
 ![Diagrama Classes REST](images/diagrama-classes-rest.png)
 
 ~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+{
+}
 ~~~
 
 Detalhamento da mensagem JSON:
@@ -209,23 +210,41 @@ Atributo | Descrição
 
 ### Interface `ICreateAuction` <!-- omit in toc -->
 
-> Resumo do papel da interface.
+Esta interface é uma fonte que dispara um evento para um comprador criar um leilão com um produto de interesse.
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+**Tópico**: `auction/create`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
+![Diagrama Classes ICreateAuction](images/diagrama-classes-icreateauction.png)
 
 ~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+{
+  "productId": 9,
+  "qty": 500,
+  "buyer": {
+    "id": 9,
+    "name": "SuperBuyer",
+  }
+}
 ~~~
 
 Detalhamento da mensagem JSON:
 
+**CreateAuction**
+
 Atributo | Descrição
 -------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
+`productId` | `O id do produto de interesse`
+`qty` | `A quantidade que o comprador está interessado`
+`buyer` | `As informações do comprador`
+
+**Buyer**
+
+Atributo | Descrição
+-------| --------
+`id` | `O id do comprador`
+`name` | `O nome do comprador`
 
 ### Interface `IAuction` <!-- omit in toc -->
 

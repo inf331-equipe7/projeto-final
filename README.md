@@ -788,7 +788,7 @@ Detalhamento da mensagem JSON:
 
 Atributo | Descrição
 -------| --------
-`auctionId` | `defini um número único para o leilão`
+`auctionId` | `define um número único para o leilão`
 `product` | `armazena o Produto desejado`
 `lowerBid` | `registrará o lance mais baixo registrado`
 `seller` | `registrará o Seller com Bid mais baixo proposto`
@@ -797,8 +797,6 @@ Atributo | Descrição
 <p>&nbsp;</p>
 
 # Nível 2
-
-Apresente aqui o detalhamento do Nível 2 conforme detalhado na especificação com, no mínimo, as seguintes subseções:
 
 ## Diagrama do Nível 2
 

@@ -21,14 +21,9 @@
   - [Componente `Auction`](#componente-auction)
 - [Nível 2](#nível-2)
   - [Diagrama do Nível 2 - Componente Auction](#diagrama-do-nível-2---componente-auction)
-      - [Criação de leilão](#criação-de-leilão)
-      - [Lances](#lances)
-      - [Término de leilão](#término-de-leilão)
   - [Componente `Gerencia Leilão`](#componente-gerencia-leilão)
-    - [Interface `IAuction` <!-- omit in toc →](#interface-iauction----omit-in-toc-)
-    - [Interface `ICreateAuction` <!-- omit in toc →](#interface-icreateauction----omit-in-toc-)
   - [Componente `Manter Leilão`](#componente-manter-leilão)
-    - [Interface `IAuction` <!-- omit in toc →](#interface-iauction----omit-in-toc--1)
+  - [Componente `Gerenciar Lance`](#componente-gerenciar-lance)
 - [Multiplas Interfaces](#multiplas-interfaces)
 
 # Nível 1
@@ -811,7 +806,7 @@ Atributo | Descrição
 
 ### Detalhamento da interação de componentes <!-- omit in toc -->
 
-#### Criação de leilão
+#### Criação de leilão <!-- omit in toc -->
 
 * O componente `Auction Controller` assina no barramento de mensagens de tópico `"auction/create"` através da `interface ICreateAuction`.
   * Ao receber uma mensagem neste tópico, dispara o início de um leilão.
@@ -824,7 +819,7 @@ Atributo | Descrição
   * Internamente este evento é atendido por uma interface provida do componente `Montar telas leilão`, que é responsável por montar as telas de leilão.
     * Este componente mostra os detalhes do leilão através do componente `Detalhar o Leilão` através da `interface IAuctionDetails`.
 
-#### Lances
+#### Lances <!-- omit in toc -->
 
 * Para fazer um novo lance, o componente `Montar telas leilão` pede ao componente `Formulário Novo Lance` através da `interface IAuctionNewBid` os dados do novo lance.
   * Ao receber os dados, o componente `Montar telas leilão` publica os dados externamente no barramento pelo tópico `"auction/<auctionId>/bid"` através da mesma `interface IAuction`.
@@ -837,7 +832,7 @@ Atributo | Descrição
   * Internamente este evento é atendido por uma interface provida do componente `Montar telas leilão`, que é responsável por montar as telas de leilão.
     * Este componente mostra as atualizações do leilão através do componente `Detalhar o Leilão` através da `interface IAuctionDetails`.
 
-#### Término de leilão
+#### Término de leilão <!-- omit in toc -->
 
 * O componente `Auction Controller` publica no barramento de mensagens de tópico `"auction/<auctionId>/finish"` através da `interface IAuction`.
 * O componente `Auction View` assina no barramento de mensagens de tópico `"auction/<auctionId>/finish"` através da `interface IAuction`.
@@ -859,11 +854,11 @@ As interfaces listadas são detalhadas a seguir:
  
 ## Detalhamento das Interfaces <!-- omit in toc -->
  
-### Interface `IAuction` <!-- omit in toc →
+### Interface `IAuction` <!-- omit in toc -->
 
 Detalhes da interface encontra-se disponível em [Interface IAuction](#interface-iauction--3)
 
-### Interface `ICreateAuction` <!-- omit in toc →
+### Interface `ICreateAuction` <!-- omit in toc -->
 
 Detalhes da interface encontra-se disponível em [Interface ICreateAuction](#interface-icreateauction--1)
 
@@ -892,10 +887,37 @@ Método | Objetivo
 `createAuction(productId)` | `Cria um novo leilão passando o id do produto`
 `terminateAuction(auctionId)` | `Termina um leilão passando o id do leilão`
 
-### Interface `IAuction` <!-- omit in toc →
+### Interface `IAuction` <!-- omit in toc -->
 
 Detalhes da interface encontra-se disponível em [Interface IAuction](#interface-iauction--3)
 
+## Componente `Gerenciar Lance`
+
+Este componente é responsável por gerenciar os lances dos leilões.
+
+![Componente Gerenciar Lance](images/componente-gerenciar-lance.png)
+
+**Interfaces**
+* IAuctionBid
+* IAuction
+
+As interfaces listadas são detalhadas a seguir:
+
+## Detalhamento das Interfaces <!-- omit in toc -->
+
+### Interface `IAuctionBid` <!-- omit in toc -->
+
+> ![Diagrama da Interface IAuctionBid](images/diagrama-interface-iauctionbid.png)
+
+Esta interface fornece os métodos registrar os lances.
+
+Método | Objetivo
+-------| --------
+`registrarLance(auctionId)` | `Método para registrar os lances do leilão passando o id do leilão`
+
+### Interface `IAuction` <!-- omit in toc -->
+
+Detalhes da interface encontra-se disponível em [Interface IAuction](#interface-iauction--3)
 
 # Multiplas Interfaces
 

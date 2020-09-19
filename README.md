@@ -502,9 +502,9 @@ Atributo | Descrição
 
 ## Componente `Seller`
 
-> <Resumo do papel do componente e serviços que ele oferece.>
+Este componente é responsável por administrar as funções de um fornecedor. Seus serviços são iniciar o envio do produto e participar dos leilões.
 
-![Componente Seller](componente-seller.png)
+![Componente Seller](images/componente-seller.png)
 
 **Interfaces**
 > * ISeller;
@@ -518,43 +518,79 @@ As interfaces listadas são detalhadas a seguir:
 
 ### Interface `ISeller` <!-- omit in toc -->
 
-> Resumo do papel da interface.
+Esta interface é responsável por publicar um evento de despacho de produto.
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+**Tópico**: `dispatcher/order/{orderId}`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
+![Diagrama Classes ISeller](images/diagrama-classes-iseller.png)
 
 ~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+{
+  "orderId": 20,
+  "sellerId": 9,
+  "location": {
+    "zipcode": "99999-999",
+    "address": "Avenida Paulista",
+    "state": "São Paulo",
+    "city": "São Paulo"
+  }
+}
 ~~~
 
 Detalhamento da mensagem JSON:
 
+**Dispatch**
+
 Atributo | Descrição
 -------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
+`orderId` | `O id do pedido`
+`sellerId` | `O id do fornecedor`
+`location` | `A localização da entrega`
+
+**Location**
+
+Atributo | Descrição
+-------| --------
+`zipcode` | `O cep do endereço`
+`address` | `O endereço`
+`state` | `O estado do endereço`
+`city` | `A cidade do endereço`
 
 ### Interface `IPayment` <!-- omit in toc -->
 
-> Resumo do papel da interface.
+Esta interface escuta no tópico para verificar um pedido desse fornecedor que foi aprovado.
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+**Tópico**: `payment/order/{orderId}/confirmed`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
+![Diagrama Classes REST](images/diagrama-classes-rest-payment.png) 
 
 ~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+{
+  "transactionId": 007,
+  "order": 2020411456,
+  "paymentType": "Credit",
+  "dataPagamento": "2020-09-18",
+  "totalCost": 100.00,
+  "status": "aprovado",
+  "sellerId": 1
+}
 ~~~
 
 Detalhamento da mensagem JSON:
 
 Atributo | Descrição
--------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
+-------         | --------
+`transactionId` | `identificador da transação de pagamento`
+`order`         | `numero da ordem que está sendo paga nessa transação`
+`paymentType`   | `forma de pagamento (crédito, debito, boleto)`
+`date`          | `data da transação`
+`totalCost`     | `preço final do pagamento`
+`status`        | `aprovado ou recusado`
+`sellerId`      | `O id do fornecedor`
 
 ### Interface `IShipping` <!-- omit in toc -->
 

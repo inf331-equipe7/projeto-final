@@ -804,14 +804,7 @@ Atributo | Descrição
 
 ### Detalhamento da interação de componentes <!-- omit in toc -->
 
-O detalhamento deve seguir um formato de acordo com o exemplo a seguir:
 
-* O componente `Entrega Pedido Compra` assina no barramento mensagens de tópico "`pedido/+/entrega`" através da interface `Solicita Entrega`.
-  * Ao receber uma mensagem de tópico "`pedido/+/entrega`", dispara o início da entrega de um conjunto de produtos.
-* Os componentes `Solicita Estoque` e `Solicita Compra` se comunicam com componentes externos pelo barramento:
-  * Para consultar o estoque, o componente `Solicita Estoque` publica no barramento uma mensagem de tópico "`produto/<id>/estoque/consulta`" através da interface `Consulta Estoque` e assina mensagens de tópico "`produto/<id>/estoque/status`" através da interface `Posição Estoque` que retorna a disponibilidade do produto.
-
-Para cada componente será apresentado um documento conforme o modelo a seguir:
 
 ## Componente `<Nome do Componente>`
 

@@ -14,7 +14,7 @@
   - [Componente `Buyer`](#componente-buyer)
   - [Componente `Product`](#componente-product) #Simeao
   - [Componente `Order`](#componente-order) #Shida
-  - [Componente `Payment`](#componente-payment)
+  - [Componente `Payment`](#componente-payment) #Nicholas
   - [Componente `Seller`](#componente-seller)
   - [Componente `Shipping`](#componente-shipping)
   - [Componente `Recommendation`](#componente-recommendation)
@@ -94,11 +94,11 @@ Classes que representam objetos JSON associados às mensagens da interface:
 {
   "term": "camisetas",
   "price_range": {
-    "min": "50.0",
-    "max": "300.0"
+    "min": 50.0,
+    "max": 300.0
   },
-  "category_id": "2",
-  "brand_id": "3"
+  "category_id": 2,
+  "brand_id": 3
 }
 ~~~
 
@@ -123,7 +123,7 @@ Atributo | Descrição
 
 ### Interface `IProduct` <!-- omit in toc -->
 
-Esta interface é uma fonte de dados ver os detalhes de um produto.
+Esta interface é uma fonte de dados para ver os detalhes de um produto.
 
 **Tópico**: `product/{id}/details`
 
@@ -132,14 +132,16 @@ Classes que representam objetos JSON associados às mensagens da interface:
 ![Diagrama Classes IProduct](images/diagrama-classes-iproduct.png)
 
 ~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+{
+  "id": 9
+}
 ~~~
 
 Detalhamento da mensagem JSON:
 
 Atributo | Descrição
 -------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
+`id` | `O id do produto para ver os detalhes`
 
 ### Interface `IOrder` <!-- omit in toc -->
 
@@ -153,7 +155,8 @@ Classes que representam objetos JSON associados às mensagens da interface:
 
 ~~~json
 {
-
+  "fornecedorId": 9,
+  "produtoId": 9,
 }
 ~~~
 
@@ -161,11 +164,12 @@ Detalhamento da mensagem JSON:
 
 Atributo | Descrição
 -------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
+`fornecedorId` | `O id do fornecedor que está vendendo o produto`
+`produtoId` | `O id do produto será feito o pedido`
 
 ### Interface `IPayment` <!-- omit in toc -->
 
-> Esta interface é responsável por requisitar a confirmação do pagamento do pedido.
+Esta interface escuta um evento para verificar se o pagamento de um pedido foi negado ou aprovado.
 
 **Tópico**: `payment/order/<orderId>/+`
 
@@ -174,7 +178,7 @@ Classes que representam objetos JSON associados às mensagens da interface:
 ![Diagrama Classes IPayment](images/diagrama-classes-ipayment.png)
 
 ~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+{}
 ~~~
 
 Detalhamento da mensagem JSON:
@@ -245,7 +249,7 @@ Atributo | Descrição
 
 ## Componente `Product`
 
-> <Resumo do papel do componente e serviços que ele oferece.>
+> Este componente é responsável por fornecer todos os detalhes referente a um dado produto registrado na base da plataforma.
 
 ![Componente Product](componente-product.png)
 
@@ -259,23 +263,59 @@ As interfaces listadas são detalhadas a seguir:
 
 ### Interface `ISearch` <!-- omit in toc -->
 
-> Resumo do papel da interface.
+> Detalhes da interface ISearch podem ser encontradas [aqui](#Interface Search).
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+
+**Tópico**: `product/search`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
 ![Diagrama Classes REST](images/diagrama-classes-rest.png)
 
+*JSON de resposta*
 ~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+{
+  "id": 10,
+  "name": "Camiseta Polo",
+  "description": "blah blah blah blah",
+  "price": 200,
+  "qtAvailble": 5,
+  "category": {
+    "id": 1
+    "name": "Roupa",
+  },
+  "vendor": {
+    "id": 1,
+    "name": "Loja X",
+    "location": {
+        "name": "Rua xyz, Campinas-SP",
+        "latitude": -10102542798
+        "longitude": 18098431254
+      },
+    "phoneNumber": "(00) 00000-0000"
+  }
+
+}
 ~~~
 
 Detalhamento da mensagem JSON:
 
 Atributo | Descrição
 -------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
+`id` | `Idenficador do produto na base de dados da plataforma`
+`name` | `Nome do produto`,
+`description` | `Detalhes do produto`
+`price`| `Preço único do produto`,
+`qtAvailble` | `Quantidade de produtos disponível na loja`
+`category`: `Categoria em que o produto se enquadra`
+`vendor` | `informações do vendedor`
+
+** 8category
+**vendor**
+Atributo | Descrição
+`id` | `Identificador único do forncedor`
+`name` | `Nome do fornecedor/vendedor`
+`locationt`
 
 ### Interface `IProduct` <!-- omit in toc -->
 

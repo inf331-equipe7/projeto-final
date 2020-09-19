@@ -38,8 +38,8 @@
 * O `componente Product` assina no barramento de mensagens de tópico `"product/search"` através da `interface ISearch`. Quando recebe uma mensagem, ele mostra os produtos;
 * O `componente Buyer` seleciona um produto publicando no barramento a mensagem de tópico `"product/<id>/details"` através da `interface IProduct`;
 * O `componente Product` assina no barramento de mensagens de tópico `"product/<id>/details"` através da `interface IProduct`. Quando recebe uma mensagem, ele mostra os dados do produto selecionado;
-* O `componente Buyer` publica no barramento de mensagem de tópico `"order/<fornecedorId>/create/<produtoId>"` através da `interface IOrder` realizando o pedido;
-* O `componente Order` assina no barramento de mensagens de tópico `"order/<fornecedorId>/create/<produtoId>"` através da `interface IOrder`. Quando recebe uma mensagem, ele cria um pedido e valida suas informações publicando no barramento de mensagem de tópico `"payment/check/<orderId>"` através da `interface IPayment`;
+* O `componente Buyer` publica no barramento de mensagem de tópico `"order/<sellerId>/create/<produtoId>"` através da `interface IOrder` realizando o pedido;
+* O `componente Order` assina no barramento de mensagens de tópico `"order/<sellerId>/create/<produtoId>"` através da `interface IOrder`. Quando recebe uma mensagem, ele cria um pedido e valida suas informações publicando no barramento de mensagem de tópico `"payment/check/<orderId>"` através da `interface IPayment`;
 * O `componente Payment` assina no barramento de mensagens de tópico `"payment/check/<orderId>"` através da `interface IPayment`. Quando recebe a mensagem,  ele publica no barramento de mensagem de tópico `"payment/order/<orderId>/denied"` através da `interface IPayment` caso o pagamento não foi aprovado ou publica no barramento de mensagem de tópico `"payment/order/<orderId>/confirmed"` atráves da `interface IPayment` caso o pagamento foi confirmado;
 * O `component Buyer` assina no barramento de mensagem de tópico `"payment/order/<orderId>/+"` através da `interface IPayment`. Quando recebe uma mensagem, ele verifica se o pedido foi confirmado ou negado;
 * O `componente Seller` assina no barramento de mensagem de tópico `"payment/order/<orderId>/confirmed"` através da `interface IPayment`. Quando ele recebe a mensagem, dá início ao processo de envio do produto publicando no barramento de mensagem de tópico `"dispatcher/order/<orderId>"` através da `interface ISeller`;
@@ -147,15 +147,15 @@ Atributo | Descrição
 
 Esta interface é uma fonte que dispara um evento para iniciar um pedido.
 
-**Tópico**: `order/{fornecedorId}/create/{produtoId}`
+**Tópico**: `order/{sellerId}/create/{produtoId}`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes IOrder](images/diagrama-classes-iorder.png)
+![Diagrama Classes IOrder](images/diagrama-classes-iorder-1.png)
 
 ~~~json
 {
-  "fornecedorId": 9,
+  "sellerId": 9,
   "produtoId": 9,
   "qty": 1
 }
@@ -165,7 +165,7 @@ Detalhamento da mensagem JSON:
 
 Atributo | Descrição
 -------| --------
-`fornecedorId` | `O id do fornecedor que está vendendo o produto`
+`sellerId` | `O id do fornecedor que está vendendo o produto`
 `produtoId` | `O id do produto será feito o pedido`
 
 ### Interface `IPayment` <!-- omit in toc -->
@@ -375,11 +375,11 @@ As interfaces listadas são detalhadas a seguir:
 
 Esta interface escuta o tópico para criar e validar um pedido.
 
-**Tópico**: `order/{fornecedorId}/create/{produtoId}`
+**Tópico**: `order/{sellerId}/create/{produtoId}`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes IOrder](images/diagrama-classes-iorder.png)
+![Diagrama Classes IOrder](images/diagrama-classes-iorder-2.png)
 
 ~~~json
 {
@@ -462,7 +462,7 @@ As interfaces listadas são detalhadas a seguir:
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](images/diagrama-classes-rest.png) 
+![Diagrama Classes REST](images/diagrama-classes-rest-payment.png) 
 
 ~~~json
 {

@@ -802,8 +802,6 @@ Apresente aqui o detalhamento do Nível 2 conforme detalhado na especificação 
 
 ## Diagrama do Nível 2
 
-Apresente um diagrama conforme o modelo a seguir:
-
 > ![Modelo de diagrama no nível 2](images/diagrama-subcomponentes.png)
 
 ### Detalhamento da interação de componentes <!-- omit in toc -->

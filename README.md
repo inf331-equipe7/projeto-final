@@ -413,7 +413,7 @@ Atributo | Descrição
 
 Esta interface dispara um evento para validar o pagamento do pedido.
 
-**Tópico**: `payment/check/{orderId`
+**Tópico**: `payment/check/{orderId}`
 
 Detalhes da interface encontra-se disponível em [Interface IPayment](#interface-ipayment--2)
 
@@ -558,23 +558,11 @@ Atributo | Descrição
 
 ### Interface `IShipping` <!-- omit in toc -->
 
-> Esta interface escuta no barramento para verificar o estado da entrega.
+Esta interface escuta sobre o tópico atualizações sobre o estado da entrega.
 
 **Tópico**: `location/status`
 
-Classes que representam objetos JSON associados às mensagens da interface:
-
-![Diagrama Classes REST](images/diagrama-classes-ishipping.png)
-
-~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
-~~~
-
-Detalhamento da mensagem JSON:
-
-Atributo | Descrição
--------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
+Detalhes da interface encontra-se disponível em [Interface IShipping](#interface-ishipping--2)
 
 ### Interface `IAuction` <!-- omit in toc -->
 
@@ -737,7 +725,7 @@ Detalhes da interface encontra-se disponível em [Interface IAuction](#interface
 
 ## Componente `Auction`
 
-Esse componente recebe um determinado produto de um cliente e inicia o processo de leilão invertido.
+Esse componente recebe um determinado produto de um cliente, além disso inicia e termina o processo de leilão invertido.
 
 ![Componente Auction](images/componente-auction.png)
 
@@ -753,7 +741,7 @@ As interfaces listadas são detalhadas a seguir:
 
 Essa interface é responsável por criar e manter o processo de leilão, permitindo aos Sellers cadastrarem propostas.
 
-**Tópico**: `auction/<auctionId>/bid`
+**Tópico**: `auction/<auctionId>/bid` e `auction/{auctionId}/finish`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 

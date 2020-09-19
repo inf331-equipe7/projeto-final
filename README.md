@@ -251,7 +251,7 @@ Atributo | Descrição
 
 > Este componente é responsável por fornecer todos os detalhes referente a um dado produto registrado na base da plataforma.
 
-![Componente Product](componente-product.png)
+![Componente Product](images/componente-product.png)
 
 **Interfaces**
 > * ISearch;
@@ -263,14 +263,19 @@ As interfaces listadas são detalhadas a seguir:
 
 ### Interface `ISearch` <!-- omit in toc -->
 
-> Detalhes da interface ISearch podem ser encontradas [aqui](#Interface Search).
+> Detalhes da interface ISearch como JSON de request e a descrição da interface podem ser encontradas `aqui` (Interface ISearch).
 
 
 **Tópico**: `product/search`
 
+
+### Interface `IProduct` <!-- omit in toc -->
+
+product/<id>/details
+
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
+![Diagrama Classes REST](images/diagrama-classes-product.png)
 
 *JSON de resposta*
 ~~~json
@@ -279,18 +284,17 @@ Classes que representam objetos JSON associados às mensagens da interface:
   "name": "Camiseta Polo",
   "description": "blah blah blah blah",
   "price": 200,
-  "qtAvailble": 5,
+  "qty": 5,
   "category": {
-    "id": 1
-    "name": "Roupa",
+    "id": 1,
+    "name": "Vestuário",
   },
   "vendor": {
     "id": 1,
     "name": "Loja X",
     "location": {
-        "name": "Rua xyz, Campinas-SP",
-        "latitude": -10102542798
-        "longitude": 18098431254
+        "address": "Rua xyz, Campinas-SP",
+        "cep" : 13897-000,
       },
     "phoneNumber": "(00) 00000-0000"
   }
@@ -300,42 +304,38 @@ Classes que representam objetos JSON associados às mensagens da interface:
 
 Detalhamento da mensagem JSON:
 
-Atributo | Descrição
--------| --------
-`id` | `Idenficador do produto na base de dados da plataforma`
-`name` | `Nome do produto`,
+Atributo      | Descrição
+--------------| --------
+`id`          | `Idenficador do produto na base de dados da plataforma`
+`name`        | `Nome do produto`,
 `description` | `Detalhes do produto`
-`price`| `Preço único do produto`,
-`qtAvailble` | `Quantidade de produtos disponível na loja`
-`category`: `Categoria em que o produto se enquadra`
-`vendor` | `informações do vendedor`
+`price`       | `Preço único do produto`,
+`qty`  | `Quantidade de produtos disponível na loja`
+`category`    | `Categoria em que o produto se enquadra`
+`vendor`      | `informações do vendedor`
 
-** 8category
+**category**
+Atributo  | Descrição
+----------| --------
+`id`      | `Identificador único da categoria do produto`
+`name`    | `Nome da categoria em que o produto se enquadra`
+
+
 **vendor**
-Atributo | Descrição
-`id` | `Identificador único do forncedor`
-`name` | `Nome do fornecedor/vendedor`
-`locationt`
+Atributo      | Descrição
+--------------| --------
+`id`          | `Identificador único do forncedor`
+`name`        | `Nome do fornecedor/vendedor`
+`locationt`   | `Endereço da loja (caso apenas virtual, o endereço de devolução`
+`phoneNumber` | `Telefone de contato do fornecedor`
 
-### Interface `IProduct` <!-- omit in toc -->
+**location**
+Atributo      | Descrição
+--------------| --------
+`address` | `Nome da Rua e número de identificação`
+`cep`     | `CEP da Rua`
 
-> Resumo do papel da interface.
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
-
-Classes que representam objetos JSON associados às mensagens da interface:
-
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
-
-~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
-~~~
-
-Detalhamento da mensagem JSON:
-
-Atributo | Descrição
--------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
 
 ## Componente `Order`
 

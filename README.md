@@ -202,24 +202,11 @@ Atributo | Descrição
 
 ### Interface `IShipping` <!-- omit in toc -->
 
-> Esta interface é responsável por requisitar a situação da entrega.
+Esta interface escuta sobre o tópico atualizações sobre o estado da entrega.
 
 **Tópico**: `location/status`
 
-Classes que representam objetos JSON associados às mensagens da interface:
-
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
-
-~~~json
-{
-}
-~~~
-
-Detalhamento da mensagem JSON:
-
-Atributo | Descrição
--------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
+Detalhes da interface encontra-se disponível em [Interface IShipping](#interface-ishipping--2)
 
 ### Interface `ICreateAuction` <!-- omit in toc -->
 

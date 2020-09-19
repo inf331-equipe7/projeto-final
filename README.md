@@ -763,14 +763,13 @@ Atributo | Descrição
 
 ## Componente `Auction`
 
-> <Resumo do papel do componente e serviços que ele oferece.>
+> Esse componente recebe um determinado produto de um cliente e inicia o processo de leilão invertido.
 
-![Componente Auction](componente-auction.png)
+![Componente Auction](images/componente-auction.png)
 
 **Interfaces**
 > * IAuction;
 > * ICreateAuction;
-> * IAuctionBid;
 
 As interfaces listadas são detalhadas a seguir:
 
@@ -778,63 +777,73 @@ As interfaces listadas são detalhadas a seguir:
 
 ### Interface `IAuction` <!-- omit in toc -->
 
-> Resumo do papel da interface.
+> Essa interface é responsável por criar e manter o processo de leilão, permitindo aos Sellers cadastrarem propostas.
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+**Tópico**: `auction/<auctionId>/bid`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
+![Diagrama Classes REST](images/diagrama-classes-rest-iauction.png)
 
 ~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+{
+  "auctionId": 01654,
+  "productId": 1000001,
+  "lowerBid": 259.90,
+  "sellerId": 300004,
+  "bidHistory": 
+  	{
+  	  "sellerId": 30004,
+  	  "bid": 259.90
+  	}
+  	{
+  	  "sellerId": 30006,
+  	  "bid": 289.00
+  	}
+  }
 ~~~
 
 Detalhamento da mensagem JSON:
 
 Atributo | Descrição
 -------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
+`auctionId` | `número único do leilão`
+`product` | `Produto desejado`
+`lowerBid` | `registra o lance mais baixo registrado`
+`seller` | `registra o Seller com Bid mais baixo proposto`
+`bidHistory` | `registra os lances efetuados registrando o Seller e o Bid proposto`
 
 ### Interface `ICreateAuction` <!-- omit in toc -->
 
-> Resumo do papel da interface.
+> Essa interface é responsável pela criação de um novo leilão, vinculando um Buyer a ele e um Produto.
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+**Tópico**: `auction/<auctionId>/begin`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
+![Diagrama Classes REST](images/diagrama-classes-rest-icreate-auction.png)
 
 ~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+{
+  "auctionId": 01654,
+  "productId": 1000001,
+  "lowerBid": null,
+  "sellerId": null,
+  "bidHistory": { }
+  }
 ~~~
 
 Detalhamento da mensagem JSON:
 
 Atributo | Descrição
 -------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
+`auctionId` | `defini um número único para o leilão`
+`product` | `armazena o Produto desejado`
+`lowerBid` | `registrará o lance mais baixo registrado`
+`seller` | `registrará o Seller com Bid mais baixo proposto`
+`bidHistory` | `registrará os lances efetuados registrando o Seller e o Bid proposto`
 
-### Interface `IAuctionBid` <!-- omit in toc -->
-
-> Resumo do papel da interface.
-
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
-
-Classes que representam objetos JSON associados às mensagens da interface:
-
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
-
-~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
-~~~
-
-Detalhamento da mensagem JSON:
-
-Atributo | Descrição
--------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
+<p>&nbsp;</p>
 
 # Nível 2
 

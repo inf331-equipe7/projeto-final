@@ -594,13 +594,13 @@ Atributo | Descrição
 
 ### Interface `IShipping` <!-- omit in toc -->
 
-> Resumo do papel da interface.
+Esta interface escuta no barramento para verificar o estado da entrega.
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+**Tópico**: `location/status`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
+![Diagrama Classes REST](images/diagrama-classes-ishipping.png)
 
 ~~~json
 <Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>

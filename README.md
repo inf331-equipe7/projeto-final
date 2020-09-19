@@ -46,7 +46,7 @@
 * O `componente Shipping` assina no barramento de mensagem de tópico `"dispatcher/order/<orderId>"` através da `interface ISeller`. Quando recebe uma mensagem, ele publica no barramento de mensagens de tópico `"location/status"` através da `interface IShipping` atualizando o estado da entrega;
 * O `component Buyer` assina no barramento de mensagem de tópico `"location/status"` através da `interface IShipping`. Quando recebe uma mensagem, exibe as informações da entrega;
 * O `componente Seller` assina no barramento de mensagem de tópico `"location/status"` através da `interface IShipping`. Quando ele recebe a mensagem, atualiza as informações na base de dados;
-* O `componente Recommendation` assina o tópico `"order/create"` atraveś da `interface IOrder` para monitorar os produtos mais requisitados e seus respectivos fornecedores afim de melhorar o seu algoritmo de recomendação. Além disso, também assina o tópico `"payment/order/+"` através da `interface IPayment` para entender qual é a forma de pagamento mais comum praticado pelos compradores.
+* O `componente Recommendation` assina o tópico `"order/+/create/+"` atraveś da `interface IOrder` para monitorar os produtos mais requisitados e seus respectivos fornecedores afim de melhorar o seu algoritmo de recomendação. Além disso, também assina o tópico `"payment/order/+"` através da `interface IPayment` para entender qual é a forma de pagamento mais comum praticado pelos compradores.
 
 #### Leilão Invertido <!-- omit in toc -->
 
@@ -594,13 +594,13 @@ Atributo | Descrição
 
 ### Interface `IShipping` <!-- omit in toc -->
 
-> Resumo do papel da interface.
+> Esta interface escuta no barramento para verificar o estado da entrega.
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+**Tópico**: `location/status`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
+![Diagrama Classes REST](images/diagrama-classes-ishipping.png)
 
 ~~~json
 <Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
@@ -632,65 +632,126 @@ Atributo | Descrição
 -------| --------
 `<nome do atributo>` | `<objetivo do atributo>`
 
+
 ## Componente `Shipping`
 
-> <Resumo do papel do componente e serviços que ele oferece.>
+Esse componente é resposnsável por administrar as funções relativas ao vendedor.
+Ela é representada pelo Component a seguir: 
 
-![Componente Shipping](componente-shipping.png)
+![Componente Shipping](https://github.com/inf331-equipe7/projeto-final/blob/master/images/component-shipping.PNG)
 
 **Interfaces**
-> * IShipping;
-> * ISeller.
+* IShipping;
+* ISeller.
 
-As interfaces listadas são detalhadas a seguir:
+As interfaces listadas estão detalhadas a seguir:
 
 ## Detalhamento das Interfaces <!-- omit in toc -->
 
 ### Interface `IShipping` <!-- omit in toc -->
 
-> Resumo do papel da interface.
+Essa interface é a parte de atualização do estado de entrega.
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+**Tópico**: `<location/status>`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
+![Diagrama Classes REST](https://github.com/inf331-equipe7/projeto-final/blob/master/images/component-shipping-ishipping.PNG)
 
 ~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+{
+    "id": "440",
+     "status": "entregue",
+     "location": {
+        "zipcode": "99999-999",
+        "address": "Avenida Paulista",
+        "state": "São Paulo",
+        "city": "São Paulo"
+     },
+    "order":
+    {
+        "sellerId": "781"
+        "productId": "50"
+        "qty": "2"
+        
+        
+  }
+        
+}
 ~~~
 
 Detalhamento da mensagem JSON:
 
+**Shipping**
+
 Atributo | Descrição
 -------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
+`<id>` | `<show shippig id>`
+`<status>` | `<show shipping status>`
+`<location>` | `<show shipping location>`
+
+**Order**
+
+Atributo | Descrição
+-------| --------
+`<seller_id>` | `<show seller id>`
+`<product_id>` | `<show product id>`
+`<qty>` | `<show product quantity>`
 
 ### Interface `ISeller` <!-- omit in toc -->
 
-> Resumo do papel da interface.
+Essa interface é a parte da comunicação entre Seller e Shipping.
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+**Tópico**: `<dispatcher/order/{orderId}>`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
+![Diagrama Classes REST](https://github.com/inf331-equipe7/projeto-final/blob/master/images/component-shipping-iseller.PNG)
 
 ~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+{
+    "id": "150",
+     "name": "loja Y",
+     "location": {
+        "zipcode": "99999-999",
+        "address": "Avenida Paulista",
+        "state": "São Paulo",
+        "city": "São Paulo",
+        "phoneNumber": "+55 11 98144-0577"
+     },
+    "order":
+    {
+        "sellerId": "781"
+        "productId": "50"
+        "qty": "2"      
+  }
+}
 ~~~
 
 Detalhamento da mensagem JSON:
 
+**Seller**
+
 Atributo | Descrição
 -------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
+`<id>` | `<show seller id>`
+`<name>` | `<show seller name>`
+`<location>` | `<show seller location>`
+`<phone number>` | `<show seller phone number>`
+
+**Order**
+
+Atributo | Descrição
+-------| --------
+`<seller_id>` | `<show seller id>`
+`<product_id>` | `<show product id>`
+`<qty>` | `<show product quantity>`
 
 ## Componente `Recommendation`
 
-> <Resumo do papel do componente e serviços que ele oferece.>
+> Este componente é responsável por recomendar produtos aos clientes da plataforma. Ele possui algoritmos que permite classificar e recomendar produtos baseados em gosto, frequetemente visualizados, etc.
 
-![Componente Recommendation](componente-recommendation.png)
+![Componente Recommendation](images/componente-recommendation.png)
 
 **Interfaces**
 > * IOrder;
@@ -700,12 +761,13 @@ Atributo | Descrição
 As interfaces listadas são detalhadas a seguir:
 
 ## Detalhamento das Interfaces <!-- omit in toc -->
+O Componente Recomendation assina os tópicos abaixo detalhado para monitorar e enriquecer o datawarehouse afim de melhorar o algoritmo de recomendação através dessas interfaces.
 
 ### Interface `IOrder` <!-- omit in toc -->
 
-> Resumo do papel da interface.
+> Detalhes da interface encontra-se disponível em [Interface IOrder](#interface-iorder--1)
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+**Tópico**: `order/<sellerId>/create/<produtoId>`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
@@ -723,9 +785,9 @@ Atributo | Descrição
 
 ### Interface `IPayment` <!-- omit in toc -->
 
-> Resumo do papel da interface.
+> Detalhes da interface encontra-se disponível em [Interface IPayment](#interface-ipayment--2) 
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+**Tópico**: `payment/order/+`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
@@ -743,23 +805,8 @@ Atributo | Descrição
 
 ### Interface `IAuction` <!-- omit in toc -->
 
-> Resumo do papel da interface.
+> Detalhes da interface encontra-se disponível em [Interface IAuction](#interface-iauction--3)
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
-
-Classes que representam objetos JSON associados às mensagens da interface:
-
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
-
-~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
-~~~
-
-Detalhamento da mensagem JSON:
-
-Atributo | Descrição
--------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
 
 ## Componente `Auction`
 

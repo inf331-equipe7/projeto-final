@@ -52,10 +52,10 @@
 
 * O `componente Buyer` inicia o processo de leilão publicando no barramento a mensagem de tópico `"auction/create"` através da `interface ICreateAuction`;
 * O `componente Auction` assina no barramento de mensagem de tópico `"auction/create"` através da `interface ICreateAuction`. Quando ele recebe a mensagem, ele inicia o leilão com o produto que o comprador deseja e com um tempo limite publicando uma mensagem no barramento de tópico `"auction/<auctionId>/begin"` através da `interface IAuction`;
-* O `componente Seller` assina no barramento de mensagem de tópico `"auction/<auctionId>/begin"` através da `interface IAuction`. Quando recebe uma mensagem, os fornecedores podem enviar seus lances para o produto desejado publicando no barramento de mensagens de tópico `"auction/<auctionId>/bid"` através da `interface IAuctionBid`;
-* O `componente Auction` assina no barramento de mensagem de tópico `"auction/<auctionId>/bid"` através da `interface IAuctionBid`. Quando recebe uma mensagem, o leilão monitora os lances do leilão;
-* O `componente Seller` assina no barramento de mensagem de tópico `"auction/<auctionId>/bid"` através da `interface IAuctionBid`. Quando recebe uma mensagem, o fornecedor verifica o novo lance do fornecedor concorrente e determina se vai oferecer um valor menor publicando outra mensagem no barramento usando o mesmo tópico e interface;
-* O `componente Buyer` assina no barramento de mensagem de tópico `"auction/<auctionId>/bid"` através da `interface IAuctionBid`. Quando recebe uma mensagem, o comprador pode ver os lances do leilão;
+* O `componente Seller` assina no barramento de mensagem de tópico `"auction/<auctionId>/begin"` através da `interface IAuction`. Quando recebe uma mensagem, os fornecedores podem enviar seus lances para o produto desejado publicando no barramento de mensagens de tópico `"auction/<auctionId>/bid"` através da `interface IAuction`;
+* O `componente Auction` assina no barramento de mensagem de tópico `"auction/<auctionId>/bid"` através da `interface IAuction`. Quando recebe uma mensagem, o leilão monitora os lances do leilão;
+* O `componente Seller` assina no barramento de mensagem de tópico `"auction/<auctionId>/bid"` através da `interface IAuction`. Quando recebe uma mensagem, o fornecedor verifica o novo lance do fornecedor concorrente e determina se vai oferecer um valor menor publicando outra mensagem no barramento usando o mesmo tópico e interface;
+* O `componente Buyer` assina no barramento de mensagem de tópico `"auction/<auctionId>/bid"` através da `interface IAuction`. Quando recebe uma mensagem, o comprador pode ver os lances do leilão;
 * O `componente Auction` informa o final do leilão publicando uma mensagem no barramento de tópico `"auction/<auctionId>/finish"` através da `interface IAuction`;
 * O `componente Buyer` assina no barramento de mensagem de tópico `"auction/<auctionId>/finish"` através da `interface IAuction`. Quando recebe uma mensagem, o comprador pode ver lance final;
 * O `componente Seller` assina no barramento de mensagem de tópico `"auction/<auctionId>/finish"` através da `interface IAuction`. Quando recebe uma mensagem, informa ao fornecedor que ofereceu o menor lance que ele ganhou o leilão;
@@ -635,8 +635,7 @@ Atributo | Descrição
 
 ## Componente `Shipping`
 
-Esse componente é resposnsável por administrar as funções relativas ao vendedor.
-Ela é representada pelo Component a seguir: 
+Esse componente é responsável por administrar as funções relativas a entrega. Seus serviços são criação da entrega e atualização de estado.
 
 ![Componente Shipping](images/component-shipping.PNG)
 
@@ -650,9 +649,9 @@ As interfaces listadas estão detalhadas a seguir:
 
 ### Interface `IShipping` <!-- omit in toc -->
 
-Essa interface é a parte de atualização do estado de entrega.
+Essa interface é um fonte de dados sobre a entrega, ela publica o estado da entrega de um pedido.
 
-**Tópico**: `<location/status>`
+**Tópico**: `location/status`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
@@ -660,23 +659,19 @@ Classes que representam objetos JSON associados às mensagens da interface:
 
 ~~~json
 {
-    "id": "440",
-     "status": "entregue",
-     "location": {
-        "zipcode": "99999-999",
-        "address": "Avenida Paulista",
-        "state": "São Paulo",
-        "city": "São Paulo"
-     },
-    "order":
-    {
-        "sellerId": "781"
-        "productId": "50"
-        "qty": "2"
-        
-        
-  }
-        
+  "id": "440",
+  "status": "entregue",
+  "location": {
+    "zipcode": "99999-999",
+    "address": "Avenida Paulista",
+    "state": "São Paulo",
+    "city": "São Paulo"
+  },
+  "order": {
+    "sellerId": "781",
+    "productId": "50",
+    "qty": "2"  
+  }     
 }
 ~~~
 
@@ -686,77 +681,74 @@ Detalhamento da mensagem JSON:
 
 Atributo | Descrição
 -------| --------
-`<id>` | `<show shippig id>`
-`<status>` | `<show shipping status>`
-`<location>` | `<show shipping location>`
+`id` | `O id da entrega`
+`status` | `O estado da entrega`
+`location` | `A localização de envio`
 
 **Order**
 
 Atributo | Descrição
 -------| --------
-`<seller_id>` | `<show seller id>`
-`<product_id>` | `<show product id>`
-`<qty>` | `<show product quantity>`
+`seller_id` | `O id do fornecedor`
+`product_id` | `O id do produto`
+`qty` | `A quantidade ser enviada`
 
 ### Interface `ISeller` <!-- omit in toc -->
 
-Essa interface é a parte da comunicação entre Seller e Shipping.
+Essa interface escuta no tópico um evento de despachar um produto e cria uma entrega
 
 **Tópico**: `<dispatcher/order/{orderId}>`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](images/component-shipping-iseller.PNG)
+![Diagrama Classes REST](images/component-shipping-ishipping.PNG)
 
 ~~~json
 {
-    "id": "150",
-     "name": "loja Y",
-     "location": {
-        "zipcode": "99999-999",
-        "address": "Avenida Paulista",
-        "state": "São Paulo",
-        "city": "São Paulo",
-        "phoneNumber": "+55 11 98144-0577"
-     },
-    "order":
-    {
-        "sellerId": "781"
-        "productId": "50"
-        "qty": "2"      
-  }
+  "id": "440",
+  "status": "entregue",
+  "location": {
+    "zipcode": "99999-999",
+    "address": "Avenida Paulista",
+    "state": "São Paulo",
+    "city": "São Paulo"
+  },
+  "order": {
+    "sellerId": "781",
+    "productId": "50",
+    "qty": "2"  
+  }     
 }
 ~~~
 
 Detalhamento da mensagem JSON:
 
-**Seller**
+**Shipping**
 
 Atributo | Descrição
 -------| --------
-`<id>` | `<show seller id>`
-`<name>` | `<show seller name>`
-`<location>` | `<show seller location>`
-`<phone number>` | `<show seller phone number>`
+`id` | `O id da entrega`
+`status` | `O estado da entrega`
+`location` | `A localização de envio`
 
 **Order**
 
 Atributo | Descrição
 -------| --------
-`<seller_id>` | `<show seller id>`
-`<product_id>` | `<show product id>`
-`<qty>` | `<show product quantity>`
+`seller_id` | `O id do fornecedor`
+`product_id` | `O id do produto`
+`qty` | `A quantidade ser enviada`
 
 ## Componente `Recommendation`
 
-> Este componente é responsável por recomendar produtos aos clientes da plataforma. Ele possui algoritmos que permite classificar e recomendar produtos baseados em gosto, frequetemente visualizados, etc.
+Este componente é responsável por recomendar produtos aos clientes da plataforma. Ele possui algoritmos que permite classificar e recomendar produtos baseados em gosto, frequetemente visualizados, etc.
 
 ![Componente Recommendation](images/componente-recommendation.png)
 
 **Interfaces**
-> * IOrder;
-> * IPayment;
-> * IAuction.
+* IOrder;
+* IPayment;
+* IAuction.
 
 As interfaces listadas são detalhadas a seguir:
 
@@ -781,13 +773,13 @@ Detalhes da interface encontra-se disponível em [Interface IAuction](#interface
 
 ## Componente `Auction`
 
-> Esse componente recebe um determinado produto de um cliente e inicia o processo de leilão invertido.
+Esse componente recebe um determinado produto de um cliente e inicia o processo de leilão invertido.
 
 ![Componente Auction](images/componente-auction.png)
 
 **Interfaces**
-> * IAuction;
-> * ICreateAuction;
+* IAuction;
+* ICreateAuction;
 
 As interfaces listadas são detalhadas a seguir:
 
@@ -795,7 +787,7 @@ As interfaces listadas são detalhadas a seguir:
 
 ### Interface `IAuction` <!-- omit in toc -->
 
-> Essa interface é responsável por criar e manter o processo de leilão, permitindo aos Sellers cadastrarem propostas.
+Essa interface é responsável por criar e manter o processo de leilão, permitindo aos Sellers cadastrarem propostas.
 
 **Tópico**: `auction/<auctionId>/bid`
 
@@ -833,7 +825,7 @@ Atributo | Descrição
 
 ### Interface `ICreateAuction` <!-- omit in toc -->
 
-> Essa interface é responsável pela criação de um novo leilão, vinculando um Buyer a ele e um Produto.
+Essa interface é responsável pela criação de um novo leilão, vinculando um Buyer a ele e um Produto.
 
 **Tópico**: `auction/<auctionId>/begin`
 

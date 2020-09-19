@@ -12,9 +12,9 @@
 - [Nível 1](#nível-1)
   - [Diagrama Geral do Nível 1](#diagrama-geral-do-nível-1)
   - [Componente `Buyer`](#componente-buyer)
-  - [Componente `Product`](#componente-product) #Simeao
-  - [Componente `Order`](#componente-order) #Shida
-  - [Componente `Payment`](#componente-payment) #Nicholas
+  - [Componente `Product`](#componente-product)
+  - [Componente `Order`](#componente-order)
+  - [Componente `Payment`](#componente-payment)
   - [Componente `Seller`](#componente-seller)
   - [Componente `Shipping`](#componente-shipping)
   - [Componente `Recommendation`](#componente-recommendation)
@@ -39,7 +39,7 @@
 * O `componente Buyer` seleciona um produto publicando no barramento a mensagem de tópico `"product/<id>/details"` através da `interface IProduct`;
 * O `componente Product` assina no barramento de mensagens de tópico `"product/<id>/details"` através da `interface IProduct`. Quando recebe uma mensagem, ele mostra os dados do produto selecionado;
 * O `componente Buyer` publica no barramento de mensagem de tópico `"order/<fornecedorId>/create/<produtoId>"` através da `interface IOrder` realizando o pedido;
-* O `componente Order` assina no barramento de mensagens de tópico `"order/<fornecedorId>create/<produtoId>"` através da `interface IOrder`. Quando recebe uma mensagem, ele valida as informações do pedido publicando no barramento de mensagem de tópico `"payment/check/<orderId>"` através da `interface IPayment`;
+* O `componente Order` assina no barramento de mensagens de tópico `"order/<fornecedorId>/create/<produtoId>"` através da `interface IOrder`. Quando recebe uma mensagem, ele cria um pedido e valida suas informações publicando no barramento de mensagem de tópico `"payment/check/<orderId>"` através da `interface IPayment`;
 * O `componente Payment` assina no barramento de mensagens de tópico `"payment/check/<orderId>"` através da `interface IPayment`. Quando recebe a mensagem,  ele publica no barramento de mensagem de tópico `"payment/order/<orderId>/denied"` através da `interface IPayment` caso o pagamento não foi aprovado ou publica no barramento de mensagem de tópico `"payment/order/<orderId>/confirmed"` atráves da `interface IPayment` caso o pagamento foi confirmado;
 * O `component Buyer` assina no barramento de mensagem de tópico `"payment/order/<orderId>/+"` através da `interface IPayment`. Quando recebe uma mensagem, ele verifica se o pedido foi confirmado ou negado;
 * O `componente Seller` assina no barramento de mensagem de tópico `"payment/order/<orderId>/confirmed"` através da `interface IPayment`. Quando ele recebe a mensagem, dá início ao processo de envio do produto publicando no barramento de mensagem de tópico `"dispatcher/order/<orderId>"` através da `interface ISeller`;
@@ -63,7 +63,7 @@
 
 ## Componente `Buyer`
 
-Este componente é responsável por administrar as funções relativas ao comprador. Seus serviços são 
+Este componente é responsável por administrar as funções relativas ao comprador. Seus serviços são procurar por um produto, selecionar um produto, iniciar um pedido e iniciar um leilão.
 
 ![Componente Buyer](images/componente-buyer.png)
 
@@ -157,6 +157,7 @@ Classes que representam objetos JSON associados às mensagens da interface:
 {
   "fornecedorId": 9,
   "produtoId": 9,
+  "qty": 1
 }
 ~~~
 
@@ -198,7 +199,8 @@ Classes que representam objetos JSON associados às mensagens da interface:
 ![Diagrama Classes REST](images/diagrama-classes-rest.png)
 
 ~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+{
+}
 ~~~
 
 Detalhamento da mensagem JSON:
@@ -209,23 +211,41 @@ Atributo | Descrição
 
 ### Interface `ICreateAuction` <!-- omit in toc -->
 
-> Resumo do papel da interface.
+Esta interface é uma fonte que dispara um evento para um comprador criar um leilão com um produto de interesse.
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+**Tópico**: `auction/create`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
+![Diagrama Classes ICreateAuction](images/diagrama-classes-icreateauction.png)
 
 ~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+{
+  "productId": 9,
+  "qty": 500,
+  "buyer": {
+    "id": 9,
+    "name": "SuperBuyer",
+  }
+}
 ~~~
 
 Detalhamento da mensagem JSON:
 
+**CreateAuction**
+
 Atributo | Descrição
 -------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
+`productId` | `O id do produto de interesse`
+`qty` | `A quantidade que o comprador está interessado`
+`buyer` | `As informações do comprador`
+
+**Buyer**
+
+Atributo | Descrição
+-------| --------
+`id` | `O id do comprador`
+`name` | `O nome do comprador`
 
 ### Interface `IAuction` <!-- omit in toc -->
 
@@ -339,9 +359,9 @@ Atributo      | Descrição
 
 ## Componente `Order`
 
-> <Resumo do papel do componente e serviços que ele oferece.>
+Este componente é responsável por administrar as funções relativas aos pedidos. Seus serviços são criar e validar um pedido e verificar o estado do pagamento.
 
-![Componente Order](componente-order.png)
+![Componente Order](images/componente-order.png)
 
 **Interfaces**
 > * IOrder;
@@ -353,23 +373,53 @@ As interfaces listadas são detalhadas a seguir:
 
 ### Interface `IOrder` <!-- omit in toc -->
 
-> Resumo do papel da interface.
+Esta interface escuta o tópico para criar e validar um pedido.
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+**Tópico**: `order/{fornecedorId}/create/{produtoId}`
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
+![Diagrama Classes IOrder](images/diagrama-classes-iorder.png)
 
 ~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+{
+  "orderId": 9,
+  "items": [
+    {
+      "productId": 9,
+      "name": "Camiseta Polo",
+      "description": "blah blah blah blah",
+      "price": 200.0,
+      "qty": 5,
+    }
+  ],
+  "total": 1000.0,
+  "categoryId": 1,
+  "sellerId": 1
+}
 ~~~
 
 Detalhamento da mensagem JSON:
 
+**Order**
+
 Atributo | Descrição
 -------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
+`orderId` | `O id do novo pedido`
+`items` | `Os itens do pedido`
+`total` | `O total do pedido`
+`categoryId` | `O id da categoria do produto`
+`sellerId` | `O id do fornecedor que vende o produto`
+
+**Item**
+
+Atributo | Descrição
+-------| --------
+`productId` | `O id do produto`
+`name` | `O nome do produto`
+`description` | `A descrição do produto`
+`price` | `O preço unitário do produto`
+`qty` | `O quantidade de produtos do produto`
 
 ### Interface `IPayment` <!-- omit in toc -->
 
@@ -393,9 +443,9 @@ Atributo | Descrição
 
 ## Componente `Payment`
 
-> <Resumo do papel do componente e serviços que ele oferece.>
+> Payment é o componente que efetua o pagamento de um pedido realizado, verificando se o pagamento foi ou não aprovado.
 
-![Componente Payment](componente-payment.png)
+![Componente Payment](images/componente-payment.png)
 
 **Interfaces**
 > * IPayment.
@@ -412,17 +462,30 @@ As interfaces listadas são detalhadas a seguir:
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
+![Diagrama Classes REST](images/diagrama-classes-rest.png) 
 
 ~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
+{
+  "transactionId": 007,
+  "order": 2020411456,
+  "paymentType": "Credit",
+  "dataPagamento": "2020-09-18",
+  "totalCost": 100.00
+  }
 ~~~
 
 Detalhamento da mensagem JSON:
 
 Atributo | Descrição
--------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
+-------         | --------
+`transactionId` | `identificador da transação de pagamento`
+`order`         | `numero da ordem que está sendo paga nessa transação`
+`paymentType`   | `forma de pagamento (crédito, debito, boleto)`
+`date`          | `data da transação`
+`totalCost`     | `preço final do pagamento`
+`status`        | `aprovado ou recusado`
+
+<p>&nbsp;</p>
 
 ## Componente `Seller`
 

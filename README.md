@@ -1079,3 +1079,5 @@ Método | Objetivo
 > Escreva um texto detalhando como seus componentes  podem ser preparados para que seja possível trocar de interface apenas trocando o componente View e mantendo o Model e Controller.
 >
 > É recomendado a inserção de, pelo menos, um diagrama que deve ser descrito no texto. O formato do diagrama é livre e deve ilustrar a arquitetura proposta.
+
+![Multiplas Interfaces](images/multiplas-interfaces.png)

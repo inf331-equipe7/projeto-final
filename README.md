@@ -688,14 +688,14 @@ Atributo | Descrição
 
 ## Componente `Recommendation`
 
-> Este componente é responsável por recomendar produtos aos clientes da plataforma. Ele possui algoritmos que permite classificar e recomendar produtos baseados em gosto, frequetemente visualizados, etc.
+Este componente é responsável por recomendar produtos aos clientes da plataforma. Ele possui algoritmos que permite classificar e recomendar produtos baseados em gosto, frequetemente visualizados, etc.
 
 ![Componente Recommendation](images/componente-recommendation.png)
 
 **Interfaces**
-> * IOrder;
-> * IPayment;
-> * IAuction.
+* IOrder;
+* IPayment;
+* IAuction.
 
 As interfaces listadas são detalhadas a seguir:
 
@@ -704,56 +704,11 @@ O Componente Recomendation assina os tópicos abaixo detalhado para monitorar e 
 
 ### Interface `IOrder` <!-- omit in toc -->
 
-> Resumo do papel da interface IOrder pode ser encontrada [aqui](#Interace-IOrder).
-
-**Tópico**: `order/+/create/+`
-
-Classes que representam objetos JSON associados às mensagens da interface:
-
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
-
-> O formato da mensagem json associado ao objeto recebido nesse tópico encontra-se detalhado em [Interface Order](#Interface-Order)
-
-Detalhamento da mensagem JSON:
-
-Detalhes da mensagem JSON encontra-se disponível em [Interface Order](#Interface-Order)
+Detalhes da interface encontra-se disponível em [Interface Order](#Interface-Order)
 
 ### Interface `IPayment` <!-- omit in toc -->
 
-> Resumo do papel da interface IPayment pode ser encontrado [aqui](#Interface-Payment).
-
-**Tópico**: `payment/order/+`
-
-Classes que representam objetos JSON associados às mensagens da interface:
-
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
-
-O formato da mensagem json associado ao objeto recebido nesse tópico encontra-se detalhado em [Interface Payment](#Interface-Payment)
-
-Detalhamento da mensagem JSON:
-
-> Detalhes da mensagem JSON recebido nesse tópico encontra-se detalhado em [Interface Payment](#Interface-Payment) 
-
-
-### Interface `IPayment` <!-- omit in toc -->
-
-> Resumo do papel da interface.
-
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
-
-Classes que representam objetos JSON associados às mensagens da interface:
-
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
-
-~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
-~~~
-
-Detalhamento da mensagem JSON:
-
-Atributo | Descrição
--------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
+Detalhes da interface encontra-se disponível em [Interface Payment](#Interface-Payment) 
 
 ### Interface `IAuction` <!-- omit in toc -->
 
@@ -763,7 +718,7 @@ Atributo | Descrição
 
 Classes que representam objetos JSON associados às mensagens da interface:
 
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
+![Diagrama Classes REST](images/diagrama-classes-iauction.png)
 
 ~~~json
 <Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>

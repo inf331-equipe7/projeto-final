@@ -24,6 +24,10 @@
   - [Componente `Gerencia Leilão`](#componente-gerencia-leilão)
   - [Componente `Manter Leilão`](#componente-manter-leilão)
   - [Componente `Gerenciar Lance`](#componente-gerenciar-lance)
+  - [Componente `BuyerDAO`](#componente-buyerdao)
+  - [Componente `AuctionDAO`](#componente-auctiondao)
+  - [Componente `SellerDAO`](#componente-sellerdao)
+  - [Componente `ProductDAO`](#componente-productdao)
 - [Multiplas Interfaces](#multiplas-interfaces)
 
 # Nível 1
@@ -878,7 +882,7 @@ As interfaces listadas são detalhadas a seguir:
 
 ### Interface `IManageAuction` <!-- omit in toc -->
 
-> ![Diagrama da Interface IManageAuction](images/diagrama-interface-imanageauction.png)
+![Diagrama da Interface IManageAuction](images/diagrama-interface-imanageauction.png)
 
 Esta interface fornece os métodos para criar e terminar um leilão.
 
@@ -907,7 +911,7 @@ As interfaces listadas são detalhadas a seguir:
 
 ### Interface `IAuctionBid` <!-- omit in toc -->
 
-> ![Diagrama da Interface IAuctionBid](images/diagrama-interface-iauctionbid.png)
+![Diagrama da Interface IAuctionBid](images/diagrama-interface-iauctionbid.png)
 
 Esta interface fornece os métodos registrar os lances.
 
@@ -918,6 +922,77 @@ Método | Objetivo
 ### Interface `IAuction` <!-- omit in toc -->
 
 Detalhes da interface encontra-se disponível em [Interface IAuction](#interface-iauction--3)
+
+## Componente `BuyerDAO`
+
+Este componente representa o modelo de entidade do comprador.
+
+![Componente BuyerDAO](images/componente-buyerdao.png)
+
+**Interfaces**
+* Atualizar dados
+
+As interfaces listadas são detalhadas a seguir:
+
+## Detalhamento das Interfaces <!-- omit in toc -->
+
+### Interface `Atualizar dados` <!-- omit in toc -->
+
+![Diagrama da Interface Atualizar dados](images/diagrama-interface-atualizar-dados.png)
+
+Esta interface fornece os métodos para acessar/alterar os dados desta entidade. Os métodos são os típicos `get` e `set` de um DAO.
+
+## Componente `AuctionDAO`
+
+Este componente representa o modelo de entidade do leilão.
+
+![Componente AuctionDAO](images/componente-auctiondao.png)
+
+**Interfaces**
+* Atualizar dados
+
+As interfaces listadas são detalhadas a seguir:
+
+## Detalhamento das Interfaces <!-- omit in toc -->
+
+### Interface `Atualizar dados` <!-- omit in toc -->
+
+Detalhes da interface encontra-se disponível em [Interface Atualizar dados](#interface-atualizar-dados--1)
+
+## Componente `SellerDAO`
+
+Este componente representa o modelo de entidade do fornecedor.
+
+![Componente SellerDAO](images/componente-sellerdao.png)
+
+**Interfaces**
+* Atualizar dados
+
+As interfaces listadas são detalhadas a seguir:
+
+## Detalhamento das Interfaces <!-- omit in toc -->
+
+### Interface `Atualizar dados` <!-- omit in toc -->
+
+Detalhes da interface encontra-se disponível em [Interface Atualizar dados](#interface-atualizar-dados--1)
+
+## Componente `ProductDAO`
+
+Este componente representa o modelo de entidade do produto.
+
+![Componente ProductDAO](images/componente-productdao.png)
+
+**Interfaces**
+* Atualizar dados
+
+As interfaces listadas são detalhadas a seguir:
+
+## Detalhamento das Interfaces <!-- omit in toc -->
+
+### Interface `Atualizar dados` <!-- omit in toc -->
+
+Detalhes da interface encontra-se disponível em [Interface Atualizar dados](#interface-atualizar-dados--1)
+
 
 # Multiplas Interfaces
 

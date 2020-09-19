@@ -28,6 +28,10 @@
   - [Componente `AuctionDAO`](#componente-auctiondao)
   - [Componente `SellerDAO`](#componente-sellerdao)
   - [Componente `ProductDAO`](#componente-productdao)
+  - [Componente `Montar Telas Leilão`](#componente-montar-telas-leilão)
+  - [Component `Formulário Novo Lance`](#component-formulário-novo-lance)
+    - [Interface `IAuctionNewBid`](#interface-iauctionnewbid)
+  - [Componente `Detalhar Leilão`](#componente-detalhar-leilão)
 - [Multiplas Interfaces](#multiplas-interfaces)
 
 # Nível 1
@@ -993,6 +997,80 @@ As interfaces listadas são detalhadas a seguir:
 
 Detalhes da interface encontra-se disponível em [Interface Atualizar dados](#interface-atualizar-dados--1)
 
+## Componente `Montar Telas Leilão`
+
+Esse componente é responsável por montar as telas do leilão. 
+
+![Componente Montar Telas Leilão](images/componente-montar-telas-leilao.png)
+
+**Interfaces**
+* IAuction
+* ICreateAuction
+
+As interfaces listadas são detalhadas a seguir:
+
+## Detalhamento das Interfaces <!-- omit in toc -->
+ 
+### Interface `IAuction` <!-- omit in toc -->
+
+Detalhes da interface encontra-se disponível em [Interface IAuction](#interface-iauction--3).
+
+Além disso, o seguinte método é disponível.
+
+Método | Objetivo
+-------| --------
+`criarTela()` | `Método para criar telas do leilão`
+
+### Interface `ICreateAuction` <!-- omit in toc -->
+
+Detalhes da interface encontra-se disponível em [Interface ICreateAuction](#interface-icreateauction--1)
+
+## Component `Formulário Novo Lance`
+
+Esse componente é responsável por montar os formulários do leilão. 
+
+![Componente Formulário Novo Lance](images/componente-formulario-novo-lance.png)
+
+**Interfaces**
+* IAuctionNewBid
+
+As interfaces listadas são detalhadas a seguir:
+
+## Detalhamento das Interfaces <!-- omit in toc -->
+ 
+### Interface `IAuctionNewBid` <!-- omit in toc  -->
+
+![Diagrama da Interface IAuctionNewBid](images/diagrama-interface-iauctionnewbid.png)
+
+Essa interface fornece os métodos para a criação do formulário novo lance.
+
+Método | Objetivo
+-------| --------
+`createNewBid(auctionId)` | `Cria um novo lance para algum leilão`
+
+
+## Componente `Detalhar Leilão`
+
+Esse componente é responsável por montar os detalhes do leilão como atualização de lances. 
+
+![Componente Detalhar Leilão](images/componente-detalhar-leilao.png)
+
+**Interfaces**
+* IAuctionDetails
+
+As interfaces listadas são detalhadas a seguir:
+
+## Detalhamento das Interfaces <!-- omit in toc -->
+ 
+### Interface `IAuctionDetails` <!-- omit in toc -->
+
+![Diagrama da Interface IAuctionDetails](images/diagrama-interface-iauctiondetails.png)
+
+Essa interface fornece os métodos para a montagem dos detalhes do leilão.
+
+Método | Objetivo
+-------| --------
+`atualizarLeilao()` | `Atualiza e monta os detalhes do leilão`
 
 # Multiplas Interfaces
 

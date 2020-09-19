@@ -248,23 +248,12 @@ Atributo | Descrição
 
 ### Interface `IAuction` <!-- omit in toc -->
 
-> Resumo do papel da interface.
+Esta interface escuta as atualizações do leilões que o comprador está participando.
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+**Tópico 1**: `auction/{auctionId}/bid`
+**Tópico 2**: `auction/{auctionId}/finish`
 
-Classes que representam objetos JSON associados às mensagens da interface:
-
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
-
-~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
-~~~
-
-Detalhamento da mensagem JSON:
-
-Atributo | Descrição
--------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
+Detalhes da interface encontra-se disponível em [Interface IAuction](#interface-iauction--3)
 
 ## Componente `Product`
 
@@ -422,23 +411,11 @@ Atributo | Descrição
 
 ### Interface `IPayment` <!-- omit in toc -->
 
-> Resumo do papel da interface.
+Esta interface dispara um evento para validar o pagamento do pedido.
 
-**Tópico**: `<tópico que a respectiva interface assina ou publica>`
+**Tópico**: `payment/check/{orderId`
 
-Classes que representam objetos JSON associados às mensagens da interface:
-
-![Diagrama Classes REST](images/diagrama-classes-rest.png)
-
-~~~json
-<Formato da mensagem JSON associada ao objeto enviado/recebido por essa interface.>
-~~~
-
-Detalhamento da mensagem JSON:
-
-Atributo | Descrição
--------| --------
-`<nome do atributo>` | `<objetivo do atributo>`
+Detalhes da interface encontra-se disponível em [Interface IPayment](#interface-ipayment--2)
 
 ## Componente `Payment`
 

@@ -961,7 +961,7 @@ As interfaces listadas são detalhadas a seguir:
 
 ### Interface `Atualizar dados` <!-- omit in toc -->
 
-Detalhes da interface encontra-se disponível em [Interface Atualizar dados](#interface-atualizar-dados--1)
+Detalhes da interface encontra-se disponível em [Interface Atualizar dados](#interface-atualizar-dados-)
 
 ## Componente `SellerDAO`
 
@@ -978,7 +978,7 @@ As interfaces listadas são detalhadas a seguir:
 
 ### Interface `Atualizar dados` <!-- omit in toc -->
 
-Detalhes da interface encontra-se disponível em [Interface Atualizar dados](#interface-atualizar-dados--1)
+Detalhes da interface encontra-se disponível em [Interface Atualizar dados](#interface-atualizar-dados-)
 
 ## Componente `ProductDAO`
 
@@ -995,7 +995,7 @@ As interfaces listadas são detalhadas a seguir:
 
 ### Interface `Atualizar dados` <!-- omit in toc -->
 
-Detalhes da interface encontra-se disponível em [Interface Atualizar dados](#interface-atualizar-dados--1)
+Detalhes da interface encontra-se disponível em [Interface Atualizar dados](#interface-atualizar-dados-)
 
 ## Componente `Montar Telas Leilão`
 
